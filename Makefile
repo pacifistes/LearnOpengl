@@ -10,7 +10,8 @@ GLEWINCL = /Users/bbrunell/.brew/Cellar/glew/2.1.0/include
 GLFWINCL = /Users/bbrunell/.brew/Cellar/glfw/3.3/include
 LIBFTINCL = libftprintf/printf/includes/
 
-SRCS = main.c
+SRCS = main.c \
+	parser.c
 
 SRC = $(addprefix $(SRCSPATH), $(SRCS))
 
