@@ -11,7 +11,10 @@ GLFWINCL = /Users/bbrunell/.brew/Cellar/glfw/3.3/include
 LIBFTINCL = libftprintf/printf/includes/
 
 SRCS = main.c \
-	parser.c
+	parser.c \
+	register_faces.c \
+	register_names.c \
+	rotate.c
 
 SRC = $(addprefix $(SRCSPATH), $(SRCS))
 

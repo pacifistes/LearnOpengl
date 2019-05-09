@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   register_names.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/09 03:07:05 by bbrunell         ###   ########.fr       */
+/*   Created: 2019/05/09 02:19:10 by bbrunell          #+#    #+#             */
+/*   Updated: 2019/05/09 03:07:12 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	run(t_plop *tmp)
+void	register_group_name(char *str, t_plop **plop)
 {
-	(void)tmp;
+	(void)str;
+	(void)plop;
 }
 
-int		main(int ac, char **args)
+void	register_object_name(char *str, t_plop **plop)
 {
-	t_plop	*tmp;
-
-	if (ac != 2)
-	{
-		ft_printf("Usage: ./scop obj_filename\n");
-		return (0);
-	}
-	tmp = parse(args[1]);
-	if (tmp != NULL)
-		run(tmp);
-	else
-		ft_printf("Error in file.");
-	return (0);
+	(void)str;
+	(void)plop;
 }
