@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/09 03:46:43 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/10 05:27:57 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,34 @@
 
 # include "ft_printf.h"
 # include <fcntl.h>
+# include <GLFW/glfw3.h>
 
 # define SIZE_STOCKAGE 50
 
-typedef struct	s_coordinate
+typedef struct	s_vertice
 {
 	double	x;
 	double	y;
 	double	z;
 	double	w;
-}				t_coordinate;
+	void	*next;
+}				t_vertice;
+
+typedef struct	s_texture
+{
+	double	u;
+	double	v;
+	double	w;
+	void	*next;
+}				t_texture;
+
+typedef struct	s_normal
+{
+	double	x;
+	double	y;
+	double	z;
+	void	*next;
+}				t_normal;
 
 typedef	struct	s_indice
 {
@@ -36,51 +54,58 @@ typedef	struct	s_indice
 typedef	struct	s_face
 {
 	t_indice	*indices;
+	void		*next;
 }				t_face;
 
 typedef	struct	s_group
 {
 	char	*name;
 	t_face	*faces;
+	void	*next;
 }				t_group;
 
 typedef struct	s_object
 {
 	char	*name;
 	t_group	*groups;
+	void	*next;
 }				t_object;
 
-typedef struct	s_plop
+typedef struct	s_datas
 {
-	t_object		*objects;
-	t_coordinate	*verices;
-	t_coordinate	*textures;
-	t_coordinate	*normals;
-}				t_plop;
+	t_object	*objects;
+	t_vertice	*vertices;
+	// t_texture	*textures;
+	// t_normal	*normals;
+}				t_datas;
 
 typedef struct	s_register
 {
 	char	*format;
-	void	(*apply)(char *line, t_plop **plop);
+	void	(*apply)(char *line, t_datas *datas);
 }				t_register;
 
-t_plop			*parse(char *filename);
-void			register_vertice(char *str, t_plop **plop);
-void			register_texture(char *str, t_plop **plop);
-void			register_normal(char *str, t_plop **plop);
-void			register_face(char *str, t_plop **plop);
-void			register_group_name(char *name, t_plop **plop);
-void			register_object_name(char *name, t_plop **plop);
+t_datas			parse(char *filename);
+void			register_vertice(char *str, t_datas *datas);
+// void			register_texture(char *str, t_datas *datas);
+// void			register_normal(char *str, t_datas *datas);
+void			register_face(char *str, t_datas *datas);
+void			register_group_name(char *name, t_datas *datas);
+void			register_object_name(char *name, t_datas *datas);
+void 			insert_group(t_group **groups, char *name);
+void			insert_object(t_object **objects, char *name);
+void			print_datas(t_datas *datas);
+void			clear_datas(t_datas *datas);
 
-static const t_register g_registers[6] = {
-	{
-		"vn",
-		&register_normal
-	},
-	{
-		"vt",
-		&register_texture
-	},
+static const t_register g_registers[] = {
+	// {
+	// 	"vn",
+	// 	&register_normal
+	// },
+	// {
+	// 	"vt",
+	// 	&register_texture
+	// },
 	{
 		"o",
 		&register_object_name

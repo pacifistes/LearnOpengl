@@ -14,7 +14,8 @@ SRCS = main.c \
 	parser.c \
 	register_faces.c \
 	register_names.c \
-	rotate.c
+	rotate.c \
+	datas_tools.c
 
 SRC = $(addprefix $(SRCSPATH), $(SRCS))
 
