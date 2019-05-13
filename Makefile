@@ -15,7 +15,12 @@ SRCS = main.c \
 	register_faces.c \
 	register_names.c \
 	rotate.c \
-	datas_tools.c
+	datas_tools.c \
+	init_window.c \
+	init_shader.c \
+	init_buffers.c \
+	clear_ressources.c \
+	key_callback.c
 
 SRC = $(addprefix $(SRCSPATH), $(SRCS))
 

@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/10 05:27:57 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/13 17:42:06 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 
 # include "ft_printf.h"
 # include <fcntl.h>
+
+# include <GL/glew.h>
 # include <GLFW/glfw3.h>
+# include "stb_image.h"
 
 # define SIZE_STOCKAGE 50
+# define WIDTH 800
+# define HEIGHT 800
 
 typedef struct	s_vertice
 {
@@ -96,6 +101,17 @@ void 			insert_group(t_group **groups, char *name);
 void			insert_object(t_object **objects, char *name);
 void			print_datas(t_datas *datas);
 void			clear_datas(t_datas *datas);
+
+
+/*
+**	OPENGL
+*/
+
+GLFWwindow	*init_window(void);
+GLuint		init_shader(void);
+void		init_buffers(GLuint *vao, GLuint *vbo, GLuint *ebo);
+void		clear_ressources(GLuint *vao, GLuint *vbo, GLuint *ebo);
+void		key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 static const t_register g_registers[] = {
 	// {
