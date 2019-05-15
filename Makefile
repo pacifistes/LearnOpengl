@@ -11,16 +11,18 @@ GLFWINCL = /Users/bbrunell/.brew/Cellar/glfw/3.3/include
 LIBFTINCL = libftprintf/printf/includes/
 
 SRCS = main.c \
-	parser.c \
-	register_faces.c \
-	register_names.c \
-	rotate.c \
-	datas_tools.c \
-	init_window.c \
-	init_shader.c \
-	init_buffers.c \
-	clear_ressources.c \
-	key_callback.c
+	parser/parser.c \
+	parser/register_faces.c \
+	parser/register_names.c \
+	parser/datas_tools.c \
+	opengl/init_window.c \
+	opengl/init_shader.c \
+	opengl/init_buffers.c \
+	opengl/init_textures.c \
+	opengl/key_callback.c \
+	opengl/clear_ressources.c \
+	opengl/rotate.c \
+	other/read_bmp.c
 
 SRC = $(addprefix $(SRCSPATH), $(SRCS))
 

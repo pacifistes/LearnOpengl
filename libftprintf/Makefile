@@ -67,7 +67,8 @@ SRCS_LIBFT = ft_strjoin.c ft_strlen.c ft_strnew.c ft_strsub.c ft_atoi.c \
 		ft_print_tab.c\
 		ft_strtabdup.c \
 		ft_itoa_base.c \
-		base_len.c
+		base_len.c \
+		ft_exit.c
 
 SRCS_PRINTF = 	begin_e.c          ft_printf.c        print_numbere.c    print_w.c\
 check_type.c       ft_type_conv.c     print_numberf.c    print_wstring.c\

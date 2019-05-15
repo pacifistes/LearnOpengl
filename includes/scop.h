@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/13 17:42:06 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/15 15:53:44 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 # include <GL/glew.h>
 # include <GLFW/glfw3.h>
-# include "stb_image.h"
 
 # define SIZE_STOCKAGE 50
 # define WIDTH 800
@@ -90,6 +89,19 @@ typedef struct	s_register
 	void	(*apply)(char *line, t_datas *datas);
 }				t_register;
 
+typedef struct	s_opengl
+{
+	GLFWwindow	*window;
+	GLuint		shader;
+	GLuint		vao;
+	GLuint		vbo;
+	GLuint		ebo;
+	GLuint		*vertices;
+	GLuint		*indices;
+	GLuint		texture;
+	GLuint		texture2;
+}				t_opengl;
+
 t_datas			parse(char *filename);
 void			register_vertice(char *str, t_datas *datas);
 // void			register_texture(char *str, t_datas *datas);
@@ -107,11 +119,18 @@ void			clear_datas(t_datas *datas);
 **	OPENGL
 */
 
-GLFWwindow	*init_window(void);
-GLuint		init_shader(void);
-void		init_buffers(GLuint *vao, GLuint *vbo, GLuint *ebo);
-void		clear_ressources(GLuint *vao, GLuint *vbo, GLuint *ebo);
-void		key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+GLFWwindow		*init_window(void);
+GLuint			init_shader(void);
+void			init_buffers(t_opengl *opengl);
+void			clear_ressources(GLuint *vao, GLuint *vbo, GLuint *ebo);
+void			key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void			init_textures(t_opengl *opengl);
+
+/*
+**	OTHER
+*/
+
+unsigned char	*read_bmp(char *filename, int *width, int *height);
 
 static const t_register g_registers[] = {
 	// {
