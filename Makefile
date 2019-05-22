@@ -19,10 +19,12 @@ SRCS = main.c \
 	opengl/init_shader.c \
 	opengl/init_buffers.c \
 	opengl/init_textures.c \
-	opengl/key_callback.c \
+	opengl/callbacks.c \
 	opengl/clear_ressources.c \
-	opengl/rotate.c \
-	other/read_bmp.c
+	math/math1.c \
+	math/math2.c \
+	math/math3.c \
+	other/read_bmp.c 
 
 SRC = $(addprefix $(SRCSPATH), $(SRCS))
 

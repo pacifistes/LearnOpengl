@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/15 15:53:44 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/20 22:38:52 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define SCOP_H
 
 # include "ft_printf.h"
+# include "scop_math.h"
 # include <fcntl.h>
-
+# include <time.h>
 # include <GL/glew.h>
 # include <GLFW/glfw3.h>
 
@@ -123,9 +124,12 @@ GLFWwindow		*init_window(void);
 GLuint			init_shader(void);
 void			init_buffers(t_opengl *opengl);
 void			clear_ressources(GLuint *vao, GLuint *vbo, GLuint *ebo);
-void			key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void			init_textures(t_opengl *opengl);
 
+void 			framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void			key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void 			scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void 			mouse_callback(GLFWwindow* window, double xpos, double ypos);
 /*
 **	OTHER
 */

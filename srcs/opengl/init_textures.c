@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 09:25:09 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/15 17:24:16 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/22 15:16:48 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_textures(t_opengl *opengl)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	image2 = read_bmp("./assets/odi.bmp", &width, &height);
-	ft_printf("%d | %d", width, height);
+	ft_printf("%d | %d\n", width, height);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
 	GL_BGR, GL_UNSIGNED_BYTE, image2);
 	glGenerateMipmap(GL_TEXTURE_2D);

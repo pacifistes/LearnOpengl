@@ -6,17 +6,11 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 12:40:56 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/13 17:54:53 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/22 18:43:17 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	(void)window;
-	glViewport(0, 0, width, height);
-}
 
 void		init_context(void)
 {
@@ -31,8 +25,6 @@ void		init_context(void)
 GLFWwindow	*init_window(void)
 {
 	GLFWwindow	*window;
-	// int			width;
-	// int			height;
 
 	init_context();
 	window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", NULL, NULL);
@@ -45,13 +37,16 @@ GLFWwindow	*init_window(void)
 	glfwMakeContextCurrent(window);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glewExperimental = GL_TRUE;
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 	if (glewInit() != GLEW_OK)
 	{
 		printf("Failed to initialize GLEW\n");
 		return (NULL);
 	}
-	// glfwGetFramebufferSize(window, &width, &height);
-	// glViewport(0, 0, width, height);
 	return (window);
 }

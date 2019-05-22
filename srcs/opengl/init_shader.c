@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 16:20:46 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/15 14:50:20 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/22 18:28:43 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ GLuint	init_shader(void)
 	glLinkProgram(shader_program);
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
+	int success, success2, success3;
+	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success); 
+	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success2);
+	glGetProgramiv(shader_program, GL_LINK_STATUS, &success3);
+	if (!success || !success2 || !success3)
+		ft_printf("error in shader file\n");
 	ft_strdel(&s_fragment);
 	ft_strdel(&s_vertex);
 	return (shader_program);
