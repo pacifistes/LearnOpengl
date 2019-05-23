@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/20 22:32:14 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/23 18:36:47 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ t_vector	vec_sub(t_vector v1, t_vector v2);
 t_vector	vec_add(t_vector v1, t_vector v2);
 t_vector	new_vector(float x, float y, float z);
 t_vector	cross(t_vector v1, t_vector v2);
+t_vector	scale(t_vector v1, float value);
 
 void	init_matrice(float matrice[16], float value);
 void	perspective(float matrice[16], float fov, float aspect);
+void	perspective2(float matrice[16], float fov, float aspect, float width, float height);
 void	translate(float matrice[16], t_vector vector);
 void	look_at(float matrice[16], t_vector eye, t_vector center, t_vector up);
 #endif

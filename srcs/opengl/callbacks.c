@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 16:08:57 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/20 19:48:07 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/23 14:16:25 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 }
-
-// void processInput(GLFWwindow *window)
-// {
-// 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-// 		glfwSetWindowShouldClose(window, true);
-// 	float cameraSpeed = 2.5 * deltaTime;
-// 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-// 		cameraPos += cameraSpeed * cameraFront;
-// 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-// 		cameraPos -= cameraSpeed * cameraFront;
-// 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-// 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-// 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-// 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-// }
-
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {

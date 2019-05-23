@@ -2,7 +2,8 @@ NAME = scop
 
 SRCSPATH = srcs/
 INCLUDES = includes/
-HEADERS = scop.h
+HEADERS = scop.h \
+		scop_math.h
 LIBFT = libftprintf
 GLEW = /Users/bbrunell/.brew/Cellar/glew/2.1.0/lib
 GLFW = /Users/bbrunell/.brew/Cellar/glfw/3.3/lib
@@ -41,7 +42,7 @@ all : $(NAME)
 libftprintf/libftprintf.a: libftprintf/libft/srcs/ libftprintf/libft/includes/ libftprintf/printf/ libftprintf/libft/includes/ libftprintf/Makefile
 	make -C $(LIBFT) all
 
-%.o: %.c
+%.o: %.c $(HEADER)
 	$(CC) -c $(WFLAGS) -I $(LIBFTINCL) -I $(INCLUDES) -I $(GLFWINCL) -I $(GLEWINCL) $< -o $@
 
 $(NAME) : libftprintf/libftprintf.a $(OBJ)

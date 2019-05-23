@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/20 22:38:52 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/23 17:48:34 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <GLFW/glfw3.h>
 
 # define SIZE_STOCKAGE 50
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 800.0f
+# define HEIGHT 800.0f
 
 typedef struct	s_vertice
 {
@@ -102,6 +102,28 @@ typedef struct	s_opengl
 	GLuint		texture;
 	GLuint		texture2;
 }				t_opengl;
+
+typedef struct s_tmp
+{
+	float 		angle;
+	float		matrice[16];
+	float		model[16];
+	float		view[16];
+	float		projection[16];
+	t_vector	camera_pos;
+	t_vector	camera_front;
+	t_vector	camera_up;
+	//Key
+	float		delta_time;
+	float		last_frame;
+	//Mouse
+	double		yaw;
+	double		pitch;
+	double		last_x;
+	double		last_y;
+	float		fov;
+	GLenum 		mode;
+}				t_tmp;
 
 t_datas			parse(char *filename);
 void			register_vertice(char *str, t_datas *datas);

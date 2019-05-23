@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 13:54:08 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/22 17:55:06 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/23 18:56:00 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,6 @@ void	init_matrice(float matrice[16], float value)
 	matrice[10] = value;
 	matrice[15] = value;
 }
-
-// void	perspective(float matrice[16], float fov, float aspect)
-// {
-// 	float tan_half_fov;
-// 	float z_near;
-// 	float z_far;
-// 	float z_range;
-// 	float angle;
-
-
-// 	angle = fov * DEG_TO_RAD;
-// 	z_near = 0.1f;
-// 	z_far = 100.0f;
-// 	z_range = z_far - z_near;
-
-// 	init_matrice(matrice, 1.0f);
-// 	tan_half_fov = tan(angle * 0.5);
-// 	matrice[0] =  tan_half_fov / aspect;
-// 	matrice[5] = fmodf(1, tan_half_fov);
-// 	matrice[10] = fmodf(-z_far, z_range);
-// 	matrice[11] = -1;
-// 	matrice[14] = fmodf(-(z_far * z_near), z_range);
-// 	matrice[15] = 0;
-// }
 
 void	perspective(float matrice[16], float fov, float aspect)
 {
@@ -61,11 +37,11 @@ void	perspective(float matrice[16], float fov, float aspect)
 
 	init_matrice(matrice, 1.0f);
 	tan_half_fov = tan(angle * 0.5);
-	matrice[0] = fmodf(1, aspect * tan_half_fov);
-	matrice[5] = fmodf(1, tan_half_fov);
-	matrice[10] = -fmodf(z_near - z_far, z_range);
-	matrice[11] = 1;
-	matrice[14] = fmodf(2 * z_far * z_near, z_range);
+	matrice[0] =  tan_half_fov / aspect;
+	matrice[5] = 1.0f / tan_half_fov;
+	matrice[10] = -z_far / z_range;
+	matrice[11] = 	-1;
+	matrice[14] = -(z_far * z_near) / z_range;
 	matrice[15] = 0;
 }
 
