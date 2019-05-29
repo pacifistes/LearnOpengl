@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/28 19:35:32 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/29 17:12:50 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,11 @@ typedef struct	s_opengl
 {
 	GLFWwindow	*window;
 	GLuint		shader;
+	GLuint		light_shader;
+	GLuint		lamp_shader;
 	GLuint		vao;
+	GLuint		cube_vao;
+	GLuint		light_vao;
 	GLuint		vbo;
 	GLuint		ebo;
 	GLuint		*vertices;
@@ -113,6 +117,7 @@ typedef struct s_tmp
 	t_vector	camera_pos;
 	t_vector	camera_front;
 	t_vector	camera_up;
+	t_vector	light_pos;
 	//Key
 	float		delta_time;
 	float		last_frame;
@@ -143,7 +148,7 @@ void			clear_datas(t_datas *datas);
 */
 
 GLFWwindow		*init_window(void);
-GLuint			init_shader(void);
+GLuint			init_shader(char *vs_filename, char *fs_filename);
 void			init_buffers(t_opengl *opengl);
 void			clear_ressources(GLuint *vao, GLuint *vbo, GLuint *ebo);
 void			init_textures(t_opengl *opengl);

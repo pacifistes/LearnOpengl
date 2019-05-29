@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 16:20:46 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/22 18:28:43 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/29 17:40:33 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,43 +31,55 @@ char	*read_file(char *filename)
 	return (str);
 }
 
-/*
-**	Pour verifier si cela compile bien
-**	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
-**	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
-**	glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-*/
-GLuint	init_shader(void)
+void	check_shaders(GLuint vertex_shader, GLuint fragment_shader, GLuint shader_program)
 {
-	GLuint vertex_shader;
-	GLuint fragment_shader;
-	GLuint shader_program;
-	char	*s_vertex;
-	char	*s_fragment;
-
-	s_vertex = read_file("./shaders/shader.vs");
-	s_fragment = read_file("./shaders/shader.fs");
-	if (s_vertex == NULL || s_fragment == NULL)
-		ft_exit("Error in shaders path.");
-	vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex_shader, 1, (const char **)&s_vertex, NULL);
-	glCompileShader(vertex_shader);
-	fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment_shader, 1, (const char **)&s_fragment, NULL);
-	glCompileShader(fragment_shader);
-	shader_program = glCreateProgram();
-	glAttachShader(shader_program, vertex_shader);
-	glAttachShader(shader_program, fragment_shader);
-	glLinkProgram(shader_program);
-	glDeleteShader(vertex_shader);
-	glDeleteShader(fragment_shader);
 	int success, success2, success3;
 	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success); 
 	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success2);
 	glGetProgramiv(shader_program, GL_LINK_STATUS, &success3);
 	if (!success || !success2 || !success3)
 		ft_printf("error in shader file\n");
-	ft_strdel(&s_fragment);
-	ft_strdel(&s_vertex);
+}
+
+GLuint	create_shader(char *path, GLenum shader_type)
+{
+	GLuint	shader;
+	GLint	success;
+	char	*str;
+
+	str = read_file(path);
+	if (!str)
+	{
+		ft_printf("Error in shader path: \"%s\"\n", path);
+		return (0);
+	}
+	shader = glCreateShader(shader_type);
+	glShaderSource(shader, 1, (const char **)&str, NULL);
+	glCompileShader(shader);
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	if (!success)
+		ft_printf("Error compile shader: \"%s\"\n", path);
+	ft_strdel(&str);
+	return (shader);
+}
+
+GLuint	init_shader(char *vs_filename, char *fs_filename)
+{
+	GLuint	vertex_shader;
+	GLuint	fragment_shader;
+	GLuint	shader_program;
+	GLint	success;
+
+	vertex_shader = create_shader(vs_filename, GL_VERTEX_SHADER);
+	fragment_shader = create_shader(fs_filename, GL_FRAGMENT_SHADER);
+	shader_program = glCreateProgram();
+	glAttachShader(shader_program, vertex_shader);
+	glAttachShader(shader_program, fragment_shader);
+	glLinkProgram(shader_program);
+	glDeleteShader(vertex_shader);
+	glDeleteShader(fragment_shader);
+	glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
+	if (!success)
+		ft_printf("Error compile shader program\n");
 	return (shader_program);
 }

@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/28 20:11:22 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/29 18:12:21 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ void	set_matrice(GLuint shader, char *str, GLfloat *matrice)
 {
 	GLint location = glGetUniformLocation(shader, str);
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrice);
+}
+
+void	set_vector(GLuint shader, char *str, t_vector vector)
+{
+	GLint location = glGetUniformLocation(shader, str);
+	glUniform3f(location, vector.x, vector.y, vector.z);
 }
 
 void	print_matrice(float matrice[16])
@@ -92,7 +98,6 @@ void processMouseInput(GLFWwindow *window, t_tmp *tmp)
 	tmp->camera_front = normalize(front);
 }
 
-
 void	loop(t_opengl *opengl)
 {
 	t_tmp	tmp;
@@ -103,10 +108,11 @@ void	loop(t_opengl *opengl)
 	tmp.camera_pos = new_vector(0.0f, 0.0f, 0.0f);
 	tmp.camera_front = new_vector(0.0f, 0.0f, -1.0f);
 	tmp.camera_up = new_vector(0.0f, 1.0f, 0.0f);
-	glUseProgram(opengl->shader);
-	glUniform1i(glGetUniformLocation(opengl->shader, "texture1"), 0);
-	glUniform1i(glGetUniformLocation(opengl->shader, "texture2"), 1);
-	glUniformMatrix4fv(glGetUniformLocation(opengl->shader, "transform"), 1, GL_FALSE, tmp.matrice);
+	tmp.light_pos = new_vector(1.2f, 1.0f, 2.0f);
+	// glUseProgram(opengl->shader);
+	// glUniform1i(glGetUniformLocation(opengl->shader, "texture1"), 0);
+	// glUniform1i(glGetUniformLocation(opengl->shader, "texture2"), 1);
+	// glUniformMatrix4fv(glGetUniformLocation(opengl->shader, "transform"), 1, GL_FALSE, tmp.matrice);
 	//For key
 	tmp.delta_time = 0.0f;
 	tmp.last_frame = 0.0f;
@@ -117,18 +123,18 @@ void	loop(t_opengl *opengl)
 	tmp.last_y =  HEIGHT / 2.0f;
 	tmp.fov   =  45.0f;
 
-	t_vector cubePositions[] = {
-		new_vector( 0.0f,  0.0f,  0.0f),
-		new_vector( 2.0f,  5.0f, -15.0f),
-		new_vector(-1.5f, -2.2f, -2.5f),
-		new_vector(-3.8f, -2.0f, -12.3f),
-		new_vector( 2.4f, -0.4f, -3.5f),
-		new_vector(-1.7f,  3.0f, -7.5f),
-		new_vector( 1.3f, -2.0f, -2.5f),
-		new_vector( 1.5f,  2.0f, -2.5f),
-		new_vector( 1.5f,  0.2f, -1.5f),
-		new_vector(-1.3f,  1.0f, -1.5f)
-	};
+	// t_vector cubePositions[] = {
+	// 	new_vector( 0.0f,  0.0f,  0.0f),
+	// 	new_vector( 2.0f,  5.0f, -15.0f),
+	// 	new_vector(-1.5f, -2.2f, -2.5f),
+	// 	new_vector(-3.8f, -2.0f, -12.3f),
+	// 	new_vector( 2.4f, -0.4f, -3.5f),
+	// 	new_vector(-1.7f,  3.0f, -7.5f),
+	// 	new_vector( 1.3f, -2.0f, -2.5f),
+	// 	new_vector( 1.5f,  2.0f, -2.5f),
+	// 	new_vector( 1.5f,  0.2f, -1.5f),
+	// 	new_vector(-1.3f,  1.0f, -1.5f)
+	// };
 	while (!glfwWindowShouldClose(opengl->window))
 	{
 		current_frame = glfwGetTime();
@@ -140,36 +146,38 @@ void	loop(t_opengl *opengl)
 		
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, opengl->texture);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, opengl->texture2);
-		glUseProgram(opengl->shader);
+		
+		// glActiveTexture(GL_TEXTURE0);
+		// glBindTexture(GL_TEXTURE_2D, opengl->texture);
+		// glActiveTexture(GL_TEXTURE1);
+		// glBindTexture(GL_TEXTURE_2D, opengl->texture2);
+		// glUseProgram(opengl->shader);
 
 		init_matrice(tmp.model, 1.0f);
 		init_matrice(tmp.view, 1.0f);
 		init_matrice(tmp.projection, 1.0f);
-
 		perspective(tmp.projection, tmp.fov, WIDTH / HEIGHT);
-		// print_matrice(tmp.model);
-		// exit(1);
-		// translate(tmp.view, new_vector(0.0f, 0.0f, -3.0f));
 		look_at(tmp.view, tmp.camera_pos, vec_add(tmp.camera_pos, tmp.camera_front), tmp.camera_up);
-		set_matrice(opengl->shader, "model", tmp.model);
-		set_matrice(opengl->shader, "view", tmp.view);
-		set_matrice(opengl->shader, "projection", tmp.projection);
 
-		glBindVertexArray(opengl->vao);
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			translate(tmp.model, cubePositions[i]);
-			float angle = 20.0f * i;
-			rotate_with_axis(tmp.model, 100 * (angle + glfwGetTime()), new_vector(1.0f, 0.3f, 0.5f));
-			set_matrice(opengl->shader, "model", tmp.model);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
-		// glDrawArrays(GL_TRIANGLES, 0, 36);//TO DELETE
-		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // NUMBERS OF INDIC
+		glUseProgram(opengl->light_shader);
+		set_vector(opengl->light_shader, "objectColor", new_vector(1.0f, 0.5f, 0.31f));
+		set_vector(opengl->light_shader, "lightColor", new_vector(1.0f, 1.0f, 1.0f));
+		set_matrice(opengl->light_shader, "model", tmp.model);
+		set_matrice(opengl->light_shader, "view", tmp.view);
+		set_matrice(opengl->light_shader, "projection", tmp.projection);
+		glBindVertexArray(opengl->cube_vao);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+		glUseProgram(opengl->lamp_shader);
+		set_matrice(opengl->lamp_shader, "view", tmp.view);
+		set_matrice(opengl->lamp_shader, "projection", tmp.projection);
+        translate(tmp.model, tmp.light_pos);
+        // scale(tmp.model, new_vector(0.2f, 0.2f, 0.2f)); // a smaller cube
+		set_matrice(opengl->lamp_shader, "model", tmp.model);
+        glBindVertexArray(opengl->light_vao);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glBindVertexArray(0);
 		glfwSwapBuffers(opengl->window);
@@ -178,14 +186,16 @@ void	loop(t_opengl *opengl)
 	}
 }
 
-
 void	run(t_datas *datas)
 {
 	t_opengl opengl;
+// "./shaders/shader.vs"
+// "./shaders/shader.fs"
 
 	(void)datas;
 	opengl.window = init_window();
-	opengl.shader = init_shader();
+	opengl.light_shader = init_shader("./shaders/color.vs", "./shaders/color.fs");
+	opengl.lamp_shader = init_shader("./shaders/lamp.vs", "./shaders/lamp.fs");
 	init_buffers(&opengl);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//GL_LINE || GL_FILL
 	init_textures(&opengl);
