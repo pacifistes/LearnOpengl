@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/23 19:05:51 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/28 20:11:22 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void processKeyInput(GLFWwindow *window, t_tmp *tmp)
 {
 	float camera_speed;
 
-	camera_speed = 5.0f * tmp->delta_time;
+	camera_speed = 10.0f * tmp->delta_time;
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -164,7 +164,7 @@ void	loop(t_opengl *opengl)
 		{
 			translate(tmp.model, cubePositions[i]);
 			float angle = 20.0f * i;
-			rotate_with_axis(tmp.model, angle, new_vector(1.0f, 0.3f, 0.5f));
+			rotate_with_axis(tmp.model, 100 * (angle + glfwGetTime()), new_vector(1.0f, 0.3f, 0.5f));
 			set_matrice(opengl->shader, "model", tmp.model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
