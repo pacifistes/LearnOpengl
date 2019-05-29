@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/29 18:12:21 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/29 19:49:21 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ void processKeyInput(GLFWwindow *window, t_tmp *tmp)
 		tmp->camera_pos = vec_sub(tmp->camera_pos, scale(tmp->camera_up, camera_speed));
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		tmp->camera_pos = vec_add(tmp->camera_pos, scale(tmp->camera_up, camera_speed));
+
+	if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS)
+		tmp->light_pos = vec_sub(tmp->light_pos, new_vector(0.0f, 0.0f, 0.1f));
+	if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS)
+		tmp->light_pos = vec_add(tmp->light_pos, new_vector(0.0f, 0.0f, 0.1f));
+	if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS)
+		tmp->light_pos = vec_sub(tmp->light_pos, new_vector(0.1f, 0.0f, 0.0f));
+	if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS)
+		tmp->light_pos = vec_add(tmp->light_pos, new_vector(0.1f, 0.0f, 0.0f));
+	if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS)
+		tmp->light_pos = vec_add(tmp->light_pos, new_vector(0.0f, 0.1f, 0.0f));
+	if (glfwGetKey(window, GLFW_KEY_KP_9) == GLFW_PRESS)
+		tmp->light_pos = vec_sub(tmp->light_pos, new_vector(0.0f, 0.1f, 0.0f));
+
 }
 
 void processMouseInput(GLFWwindow *window, t_tmp *tmp)
@@ -105,7 +119,7 @@ void	loop(t_opengl *opengl)
 	
 	tmp.angle = 0.0f;
 	init_matrice(tmp.matrice, 1.0f);
-	tmp.camera_pos = new_vector(0.0f, 0.0f, 0.0f);
+	tmp.camera_pos = new_vector(0.0f, 0.0f, -0.0f);
 	tmp.camera_front = new_vector(0.0f, 0.0f, -1.0f);
 	tmp.camera_up = new_vector(0.0f, 1.0f, 0.0f);
 	tmp.light_pos = new_vector(1.2f, 1.0f, 2.0f);
@@ -162,6 +176,8 @@ void	loop(t_opengl *opengl)
 		glUseProgram(opengl->light_shader);
 		set_vector(opengl->light_shader, "objectColor", new_vector(1.0f, 0.5f, 0.31f));
 		set_vector(opengl->light_shader, "lightColor", new_vector(1.0f, 1.0f, 1.0f));
+		set_vector(opengl->light_shader, "lightPos", tmp.light_pos);
+		set_vector(opengl->light_shader, "viewPos", tmp.camera_pos);
 		set_matrice(opengl->light_shader, "model", tmp.model);
 		set_matrice(opengl->light_shader, "view", tmp.view);
 		set_matrice(opengl->light_shader, "projection", tmp.projection);
@@ -170,7 +186,7 @@ void	loop(t_opengl *opengl)
 
 
 
-		glUseProgram(opengl->lamp_shader);
+		glUseProgram(opengl->lamp_shader);	
 		set_matrice(opengl->lamp_shader, "view", tmp.view);
 		set_matrice(opengl->lamp_shader, "projection", tmp.projection);
         translate(tmp.model, tmp.light_pos);
