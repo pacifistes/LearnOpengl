@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/29 19:49:21 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/31 15:35:34 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ void	set_vector(GLuint shader, char *str, t_vector vector)
 {
 	GLint location = glGetUniformLocation(shader, str);
 	glUniform3f(location, vector.x, vector.y, vector.z);
+}
+
+void	set_int(GLuint shader, char *str, int value)
+{
+	GLint location = glGetUniformLocation(shader, str);
+	glUniform1i(location, value);
+}
+
+void	set_float(GLuint shader, char *str, float value)
+{
+	GLint location = glGetUniformLocation(shader, str);
+	glUniform1f(location, value);
 }
 
 void	print_matrice(float matrice[16])
@@ -137,18 +149,8 @@ void	loop(t_opengl *opengl)
 	tmp.last_y =  HEIGHT / 2.0f;
 	tmp.fov   =  45.0f;
 
-	// t_vector cubePositions[] = {
-	// 	new_vector( 0.0f,  0.0f,  0.0f),
-	// 	new_vector( 2.0f,  5.0f, -15.0f),
-	// 	new_vector(-1.5f, -2.2f, -2.5f),
-	// 	new_vector(-3.8f, -2.0f, -12.3f),
-	// 	new_vector( 2.4f, -0.4f, -3.5f),
-	// 	new_vector(-1.7f,  3.0f, -7.5f),
-	// 	new_vector( 1.3f, -2.0f, -2.5f),
-	// 	new_vector( 1.5f,  2.0f, -2.5f),
-	// 	new_vector( 1.5f,  0.2f, -1.5f),
-	// 	new_vector(-1.3f,  1.0f, -1.5f)
-	// };
+	set_int(opengl->light_shader, "material.diffuse", 0);
+	set_int(opengl->light_shader, "material.specular", 1);
 	while (!glfwWindowShouldClose(opengl->window))
 	{
 		current_frame = glfwGetTime();
@@ -161,11 +163,6 @@ void	loop(t_opengl *opengl)
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		// glActiveTexture(GL_TEXTURE0);
-		// glBindTexture(GL_TEXTURE_2D, opengl->texture);
-		// glActiveTexture(GL_TEXTURE1);
-		// glBindTexture(GL_TEXTURE_2D, opengl->texture2);
-		// glUseProgram(opengl->shader);
 
 		init_matrice(tmp.model, 1.0f);
 		init_matrice(tmp.view, 1.0f);
@@ -174,16 +171,23 @@ void	loop(t_opengl *opengl)
 		look_at(tmp.view, tmp.camera_pos, vec_add(tmp.camera_pos, tmp.camera_front), tmp.camera_up);
 
 		glUseProgram(opengl->light_shader);
-		set_vector(opengl->light_shader, "objectColor", new_vector(1.0f, 0.5f, 0.31f));
-		set_vector(opengl->light_shader, "lightColor", new_vector(1.0f, 1.0f, 1.0f));
-		set_vector(opengl->light_shader, "lightPos", tmp.light_pos);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, opengl->texture);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, opengl->texture2);
+		glUseProgram(opengl->shader);
+		set_vector(opengl->light_shader, "light.ambient", new_vector(0.2f, 0.2f, 0.2f));
+		set_vector(opengl->light_shader, "light.diffuse", new_vector(0.5f, 0.5f, 0.5f));
+		set_vector(opengl->light_shader, "light.specular", new_vector(1.0f, 1.0f, 1.0f));
+		set_float(opengl->light_shader, "material.shininess", 64.0f);
+
+		set_vector(opengl->light_shader, "light.position", tmp.light_pos);
 		set_vector(opengl->light_shader, "viewPos", tmp.camera_pos);
 		set_matrice(opengl->light_shader, "model", tmp.model);
 		set_matrice(opengl->light_shader, "view", tmp.view);
 		set_matrice(opengl->light_shader, "projection", tmp.projection);
 		glBindVertexArray(opengl->cube_vao);
         glDrawArrays(GL_TRIANGLES, 0, 36);
-
 
 
 		glUseProgram(opengl->lamp_shader);	
@@ -210,7 +214,7 @@ void	run(t_datas *datas)
 
 	(void)datas;
 	opengl.window = init_window();
-	opengl.light_shader = init_shader("./shaders/color.vs", "./shaders/color.fs");
+	opengl.light_shader = init_shader("./shaders/lighting_map.vs", "./shaders/lighting_map.fs");
 	opengl.lamp_shader = init_shader("./shaders/lamp.vs", "./shaders/lamp.fs");
 	init_buffers(&opengl);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//GL_LINE || GL_FILL
