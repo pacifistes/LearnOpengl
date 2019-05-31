@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/31 15:35:34 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/31 16:13:25 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,18 @@ void	loop(t_opengl *opengl)
 	tmp.last_x =  WIDTH / 2.0f;
 	tmp.last_y =  HEIGHT / 2.0f;
 	tmp.fov   =  45.0f;
-
+	t_vector cubePositions[] = {
+		new_vector( 0.0f,  0.0f,  0.0f),
+		new_vector( 2.0f,  5.0f, -15.0f),
+		new_vector(-1.5f, -2.2f, -2.5f),
+		new_vector(-3.8f, -2.0f, -12.3f),
+		new_vector( 2.4f, -0.4f, -3.5f),
+		new_vector(-1.7f,  3.0f, -7.5f),
+		new_vector( 1.3f, -2.0f, -2.5f),
+		new_vector( 1.5f,  2.0f, -2.5f),
+		new_vector( 1.5f,  0.2f, -1.5f),
+		new_vector(-1.3f,  1.0f, -1.5f)
+	};
 	set_int(opengl->light_shader, "material.diffuse", 0);
 	set_int(opengl->light_shader, "material.specular", 1);
 	while (!glfwWindowShouldClose(opengl->window))
@@ -170,34 +181,57 @@ void	loop(t_opengl *opengl)
 		perspective(tmp.projection, tmp.fov, WIDTH / HEIGHT);
 		look_at(tmp.view, tmp.camera_pos, vec_add(tmp.camera_pos, tmp.camera_front), tmp.camera_up);
 
-		glUseProgram(opengl->light_shader);
+
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, opengl->texture);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, opengl->texture2);
 		glUseProgram(opengl->shader);
-		set_vector(opengl->light_shader, "light.ambient", new_vector(0.2f, 0.2f, 0.2f));
-		set_vector(opengl->light_shader, "light.diffuse", new_vector(0.5f, 0.5f, 0.5f));
-		set_vector(opengl->light_shader, "light.specular", new_vector(1.0f, 1.0f, 1.0f));
-		set_float(opengl->light_shader, "material.shininess", 64.0f);
 
-		set_vector(opengl->light_shader, "light.position", tmp.light_pos);
+		glUseProgram(opengl->light_shader);
+		set_float(opengl->light_shader, "light.cutOff", cos(DEG_TO_RAD * 12.5f));
+		set_vector(opengl->light_shader, "light.position", tmp.camera_pos);
+		set_vector(opengl->light_shader, "light.direction", tmp.camera_front);
 		set_vector(opengl->light_shader, "viewPos", tmp.camera_pos);
+
+		set_vector(opengl->light_shader, "light.ambient", new_vector(0.1f, 0.1f, 0.1f));
+		set_vector(opengl->light_shader, "light.diffuse", new_vector(0.8f, 0.8f, 0.8f));
+		set_vector(opengl->light_shader, "light.specular", new_vector(1.0f, 1.0f, 1.0f));
+		set_float(opengl->light_shader, "light.constant", 1.0f);
+		set_float(opengl->light_shader, "light.linear", 0.09f);
+		set_float(opengl->light_shader, "light.quadratic", 0.032f);
+		
+		
+		set_float(opengl->light_shader, "material.shininess", 32.0f);
+
 		set_matrice(opengl->light_shader, "model", tmp.model);
 		set_matrice(opengl->light_shader, "view", tmp.view);
 		set_matrice(opengl->light_shader, "projection", tmp.projection);
 		glBindVertexArray(opengl->cube_vao);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        // glDrawArrays(GL_TRIANGLES, 0, 36);
+		for (unsigned int i = 0; i < 10; i++)
+        {
+            // calculate the model matrix for each object and pass it to shader before drawing
+            init_matrice(tmp.model, 1.0f);
+            translate(tmp.model, cubePositions[i]);
+            float angle = 20.0f * i;
+            rotate_with_axis(tmp.model, angle, new_vector(1.0f, 0.3f, 0.5f));
+			set_matrice(opengl->light_shader, "model", tmp.model);
+
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
 
-		glUseProgram(opengl->lamp_shader);	
-		set_matrice(opengl->lamp_shader, "view", tmp.view);
-		set_matrice(opengl->lamp_shader, "projection", tmp.projection);
-        translate(tmp.model, tmp.light_pos);
-        // scale(tmp.model, new_vector(0.2f, 0.2f, 0.2f)); // a smaller cube
-		set_matrice(opengl->lamp_shader, "model", tmp.model);
-        glBindVertexArray(opengl->light_vao);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		// glUseProgram(opengl->lamp_shader);	
+		// set_matrice(opengl->lamp_shader, "view", tmp.view);
+		// set_matrice(opengl->lamp_shader, "projection", tmp.projection);
+        // translate(tmp.model, tmp.light_pos);
+        // // scale(tmp.model, new_vector(0.2f, 0.2f, 0.2f)); // a smaller cube
+		// set_matrice(opengl->lamp_shader, "model", tmp.model);
+        // glBindVertexArray(opengl->light_vao);
+        // glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glBindVertexArray(0);
 		glfwSwapBuffers(opengl->window);
@@ -214,7 +248,7 @@ void	run(t_datas *datas)
 
 	(void)datas;
 	opengl.window = init_window();
-	opengl.light_shader = init_shader("./shaders/lighting_map.vs", "./shaders/lighting_map.fs");
+	opengl.light_shader = init_shader("./shaders/lighting_caster.vs", "./shaders/lighting_caster.fs");
 	opengl.lamp_shader = init_shader("./shaders/lamp.vs", "./shaders/lamp.fs");
 	init_buffers(&opengl);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//GL_LINE || GL_FILL
