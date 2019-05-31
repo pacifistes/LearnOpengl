@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/31 16:13:25 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/05/31 17:14:30 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,14 @@ void	loop(t_opengl *opengl)
 		new_vector( 1.5f,  0.2f, -1.5f),
 		new_vector(-1.3f,  1.0f, -1.5f)
 	};
+
+
+	t_vector pointLightPositions[] = {
+		new_vector(0.7f, 0.2f, 0.2f),
+		new_vector(2.3f,  -3.3f, -4.0f),
+		new_vector(-4.0f,  2.0f, 12.0f),
+		new_vector(0.0f,  0.0f, -3.0f)
+	};
 	set_int(opengl->light_shader, "material.diffuse", 0);
 	set_int(opengl->light_shader, "material.specular", 1);
 	while (!glfwWindowShouldClose(opengl->window))
@@ -189,24 +197,62 @@ void	loop(t_opengl *opengl)
 		glUseProgram(opengl->shader);
 
 		glUseProgram(opengl->light_shader);
-		set_float(opengl->light_shader, "light.cutOff", cos(DEG_TO_RAD * 12.5f));
-		set_vector(opengl->light_shader, "light.position", tmp.camera_pos);
-		set_vector(opengl->light_shader, "light.direction", tmp.camera_front);
 		set_vector(opengl->light_shader, "viewPos", tmp.camera_pos);
-
-		set_vector(opengl->light_shader, "light.ambient", new_vector(0.1f, 0.1f, 0.1f));
-		set_vector(opengl->light_shader, "light.diffuse", new_vector(0.8f, 0.8f, 0.8f));
-		set_vector(opengl->light_shader, "light.specular", new_vector(1.0f, 1.0f, 1.0f));
-		set_float(opengl->light_shader, "light.constant", 1.0f);
-		set_float(opengl->light_shader, "light.linear", 0.09f);
-		set_float(opengl->light_shader, "light.quadratic", 0.032f);
-		
-		
 		set_float(opengl->light_shader, "material.shininess", 32.0f);
-
 		set_matrice(opengl->light_shader, "model", tmp.model);
 		set_matrice(opengl->light_shader, "view", tmp.view);
 		set_matrice(opengl->light_shader, "projection", tmp.projection);
+
+		 // directional light
+        set_vector(opengl->light_shader, "dirLight.direction", new_vector(-0.2f, -1.0f, -0.3f));
+        set_vector(opengl->light_shader, "dirLight.ambient", new_vector(0.05f, 0.05f, 0.05f));
+        set_vector(opengl->light_shader, "dirLight.diffuse", new_vector(0.4f, 0.4f, 0.4f));
+        set_vector(opengl->light_shader, "dirLight.specular", new_vector(0.5f, 0.5f, 0.5f));
+        // point light 1
+        set_vector(opengl->light_shader, "pointLights[0].position", pointLightPositions[0]);
+        set_vector(opengl->light_shader, "pointLights[0].ambient", new_vector(0.05f, 0.05f, 0.05f));
+        set_vector(opengl->light_shader, "pointLights[0].diffuse", new_vector(0.8f, 0.8f, 0.8f));
+        set_vector(opengl->light_shader, "pointLights[0].specular", new_vector(1.0f, 1.0f, 1.0f));
+        set_float(opengl->light_shader, "pointLights[0].constant", 1.0f);
+        set_float(opengl->light_shader, "pointLights[0].linear", 0.09);
+        set_float(opengl->light_shader, "pointLights[0].quadratic", 0.032);
+        // point light 2
+        set_vector(opengl->light_shader, "pointLights[1].position", pointLightPositions[1]);
+        set_vector(opengl->light_shader, "pointLights[1].ambient", new_vector(0.05f, 0.05f, 0.05f));
+        set_vector(opengl->light_shader, "pointLights[1].diffuse", new_vector(0.8f, 0.8f, 0.8f));
+        set_vector(opengl->light_shader, "pointLights[1].specular", new_vector(1.0f, 1.0f, 1.0f));
+        set_float(opengl->light_shader, "pointLights[1].constant", 1.0f);
+        set_float(opengl->light_shader, "pointLights[1].linear", 0.09);
+        set_float(opengl->light_shader, "pointLights[1].quadratic", 0.032);
+        // point light 3
+        set_vector(opengl->light_shader, "pointLights[2].position", pointLightPositions[2]);
+        set_vector(opengl->light_shader, "pointLights[2].ambient", new_vector(0.05f, 0.05f, 0.05f));
+        set_vector(opengl->light_shader, "pointLights[2].diffuse", new_vector(0.8f, 0.8f, 0.8f));
+        set_vector(opengl->light_shader, "pointLights[2].specular", new_vector(1.0f, 1.0f, 1.0f));
+        set_float(opengl->light_shader, "pointLights[2].constant", 1.0f);
+        set_float(opengl->light_shader, "pointLights[2].linear", 0.09);
+        set_float(opengl->light_shader, "pointLights[2].quadratic", 0.032);
+        // point light 4
+        set_vector(opengl->light_shader, "pointLights[3].position", pointLightPositions[3]);
+        set_vector(opengl->light_shader, "pointLights[3].ambient", new_vector(0.05f, 0.05f, 0.05f));
+        set_vector(opengl->light_shader, "pointLights[3].diffuse", new_vector(0.8f, 0.8f, 0.8f));
+        set_vector(opengl->light_shader, "pointLights[3].specular", new_vector(1.0f, 1.0f, 1.0f));
+        set_float(opengl->light_shader, "pointLights[3].constant", 1.0f);
+        set_float(opengl->light_shader, "pointLights[3].linear", 0.09);
+        set_float(opengl->light_shader, "pointLights[3].quadratic", 0.032);
+        // spotLight
+        set_vector(opengl->light_shader, "spotLight.position", tmp.camera_pos);
+        set_vector(opengl->light_shader, "spotLight.direction", tmp.camera_front);
+        set_vector(opengl->light_shader, "spotLight.ambient", new_vector(0.0f, 0.0f, 0.0f));
+        set_vector(opengl->light_shader, "spotLight.diffuse", new_vector(1.0f, 1.0f, 1.0f));
+        set_vector(opengl->light_shader, "spotLight.specular", new_vector(1.0f, 1.0f, 1.0f));
+        set_float(opengl->light_shader, "spotLight.constant", 1.0f);
+        set_float(opengl->light_shader, "spotLight.linear", 0.09);
+        set_float(opengl->light_shader, "spotLight.quadratic", 0.032);
+        set_float(opengl->light_shader, "spotLight.cutOff", cos(12.5f * DEG_TO_RAD));
+        set_float(opengl->light_shader, "spotLight.outerCutOff", cos(15.0f * DEG_TO_RAD));
+		
+
 		glBindVertexArray(opengl->cube_vao);
         // glDrawArrays(GL_TRIANGLES, 0, 36);
 		for (unsigned int i = 0; i < 10; i++)
@@ -224,14 +270,17 @@ void	loop(t_opengl *opengl)
 
 
 
-		// glUseProgram(opengl->lamp_shader);	
-		// set_matrice(opengl->lamp_shader, "view", tmp.view);
-		// set_matrice(opengl->lamp_shader, "projection", tmp.projection);
-        // translate(tmp.model, tmp.light_pos);
-        // // scale(tmp.model, new_vector(0.2f, 0.2f, 0.2f)); // a smaller cube
-		// set_matrice(opengl->lamp_shader, "model", tmp.model);
-        // glBindVertexArray(opengl->light_vao);
-        // glDrawArrays(GL_TRIANGLES, 0, 36);
+		glUseProgram(opengl->lamp_shader);	
+		set_matrice(opengl->lamp_shader, "view", tmp.view);
+		set_matrice(opengl->lamp_shader, "projection", tmp.projection);
+        glBindVertexArray(opengl->light_vao);
+		for (unsigned int i = 0; i < 4; i++)
+		{
+			init_matrice(tmp.model, 1.0f);
+			translate(tmp.model, pointLightPositions[i]);
+			set_matrice(opengl->lamp_shader, "model", tmp.model);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 
 		glBindVertexArray(0);
 		glfwSwapBuffers(opengl->window);
@@ -248,7 +297,7 @@ void	run(t_datas *datas)
 
 	(void)datas;
 	opengl.window = init_window();
-	opengl.light_shader = init_shader("./shaders/lighting_caster.vs", "./shaders/lighting_caster.fs");
+	opengl.light_shader = init_shader("./shaders/multiple_light.vs", "./shaders/multiple_light.fs");
 	opengl.lamp_shader = init_shader("./shaders/lamp.vs", "./shaders/lamp.fs");
 	init_buffers(&opengl);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//GL_LINE || GL_FILL
