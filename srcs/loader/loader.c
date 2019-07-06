@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   loadr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 18:21:55 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/10 04:26:19 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/06/08 15:54:54 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	register_line(char *line, t_datas *datas)
 	}
 }
 
-t_datas		parse(char *filename)
+t_mesh		*load(char *filename)
 {
 	int		fd;
 	int		ret;
@@ -51,9 +51,9 @@ t_datas		parse(char *filename)
 		ft_strdel(&line);
 	}
 	if (ret != 0)
-		return (datas);
+		return (NULL);
 	ft_strdel(&line);
 	if (!is_valid_obj(&datas))
 		clear_datas(&datas);
-	return (datas);
+	return (NULL);//Convert To mesh
 }

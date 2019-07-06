@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_ressources.c                                 :+:      :+:    :+:   */
+/*   init_camera.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/12 16:57:39 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/13 18:04:59 by bbrunell         ###   ########.fr       */
+/*   Created: 2019/06/13 18:20:19 by bbrunell          #+#    #+#             */
+/*   Updated: 2019/06/13 18:30:31 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	clear_ressources(t_gl_buffers *buffers)
+void	init_camera(t_gl_camera *camera)
 {
-	glDeleteVertexArrays(1, &buffers->vao);
-	glDeleteBuffers(1, &buffers->vbo);
-	glDeleteBuffers(1, &buffers->ebo);
-	glfwTerminate();
+	camera->pos = new_vector(0.0f, 0.0f, -0.0f);
+	camera->front = new_vector(0.0f, 0.0f, -1.0f);
+	camera->up = new_vector(0.0f, 1.0f, 0.0f);
 }

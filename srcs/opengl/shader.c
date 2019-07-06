@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shader.c                                      :+:      :+:    :+:   */
+/*   shader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 16:20:46 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/29 17:40:33 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:02:16 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ char	*read_file(char *filename)
 	return (str);
 }
 
-void	check_shaders(GLuint vertex_shader, GLuint fragment_shader, GLuint shader_program)
+void	check_shaders(GLuint vertex_shader, GLuint fragment_shader,
+GLuint shader_program)
 {
-	int success, success2, success3;
-	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success); 
+	int success;
+	int success2;
+	int success3;
+
+	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
 	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success2);
 	glGetProgramiv(shader_program, GL_LINK_STATUS, &success3);
 	if (!success || !success2 || !success3)

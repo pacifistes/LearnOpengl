@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/02 15:52:10 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/06/13 21:19:20 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_vector		scale(t_vector v1, float value);
 void			translate(float matrice[16], t_vector vector);
 t_vector		vec_sub(t_vector v1, t_vector v2);
 t_vector		vec_add(t_vector v1, t_vector v2);
+void			print_matrice(float matrice[16]);
 
 
 #endif

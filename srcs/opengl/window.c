@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_window.c                                      :+:      :+:    :+:   */
+/*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 12:40:56 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/02 16:08:44 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/06/13 20:58:14 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void		init_context(void)
+static void	init_context(void)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
@@ -35,10 +35,7 @@ GLFWwindow	*init_window(void)
 		return (NULL);
 	}
 	glfwMakeContextCurrent(window);
-	// glfwSetKeyCallback(window, key_callback);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	// glfwSetCursorPosCallback(window, mouse_callback);
-	// glfwSetScrollCallback(window, scroll_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glewExperimental = GL_TRUE;
 	glEnable(GL_DEPTH_TEST);

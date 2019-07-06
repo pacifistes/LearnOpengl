@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbrunell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/13 13:03:15 by bbrunell          #+#    #+#             */
-/*   Updated: 2016/05/13 13:03:18 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/06/08 15:55:03 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	ft_color(const char *format, t_line *li, int i)
 	return (0);
 }
 
-static void	ft_parse_printf(va_list ap, const char *format, t_line *li)
+static void	ft_load_printf(va_list ap, const char *format, t_line *li)
 {
 	int		i;
 	int		j;
@@ -79,7 +79,7 @@ int			ft_printf(const char *format, ...)
 	if (ft_error(&format) == 1)
 	{
 		va_start(ap, format);
-		ft_parse_printf(ap, format, &li);
+		ft_load_printf(ap, format, &li);
 	}
 	if (li.ret == -1)
 		return (-1);

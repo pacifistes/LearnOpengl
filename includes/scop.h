@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/02 16:06:21 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/06 17:13:24 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "ft_printf.h"
 # include "scop_math.h"
+# include "scop_loader.h"
 # include <fcntl.h>
 # include <time.h>
 # include <GL/glew.h>
@@ -24,123 +25,60 @@
 # define WIDTH 800.0f
 # define HEIGHT 800.0f
 
-typedef struct	s_vertice
+typedef struct	s_gl_shaders
 {
-	double	x;
-	double	y;
-	double	z;
-	double	w;
-	void	*next;
-}				t_vertice;
-
-typedef struct	s_texture
-{
-	double	u;
-	double	v;
-	double	w;
-	void	*next;
-}				t_texture;
-
-typedef struct	s_normal
-{
-	double	x;
-	double	y;
-	double	z;
-	void	*next;
-}				t_normal;
-
-typedef	struct	s_indice
-{
-	uint32_t	vertice;
-	uint32_t	texture;
-	uint32_t	normal;
-}				t_indice;
-
-typedef	struct	s_face
-{
-	t_indice	*indices;
-	void		*next;
-}				t_face;
-
-typedef	struct	s_group
-{
-	char	*name;
-	t_face	*faces;
-	void	*next;
-}				t_group;
-
-typedef struct	s_object
-{
-	char	*name;
-	t_group	*groups;
-	void	*next;
-}				t_object;
-
-typedef struct	s_datas
-{
-	t_object	*objects;
-	t_vertice	*vertices;
-	// t_texture	*textures;
-	// t_normal	*normals;
-}				t_datas;
-
-typedef struct	s_register
-{
-	char	*format;
-	void	(*apply)(char *line, t_datas *datas);
-}				t_register;
-
-typedef struct	s_opengl
-{
-	GLFWwindow	*window;
 	GLuint		shader;
-	GLuint		light_shader;
-	GLuint		lamp_shader;
-	GLuint		vao;
-	GLuint		cube_vao;
-	GLuint		light_vao;
-	GLuint		vbo;
-	GLuint		ebo;
-	GLuint		*vertices;
-	GLuint		*indices;
-	GLuint		texture;
-	GLuint		texture2;
-}				t_opengl;
+}				t_gl_shaders;
 
-typedef struct s_tmp
+typedef struct	s_gl_textures
+{
+	GLuint		texture;
+}				t_gl_textures;
+
+typedef struct	s_gl_buffers
+{
+	unsigned int		vao;
+	unsigned int		vbo;
+	unsigned int		ebo;
+}				t_gl_buffers;
+
+typedef struct s_gl_camera
+{
+	t_vector	pos;
+	t_vector	front;
+	t_vector	up;
+}				t_gl_camera;
+
+typedef struct s_gl_coordinate_system
+{
+	GLfloat		model[16];
+	GLfloat		view[16];
+	GLfloat		projection[16];
+}				t_gl_coordinate_system;
+
+
+typedef struct s_gl_tools
 {
 	float 		angle;
-	float		matrice[16];
-	float		model[16];
-	float		view[16];
-	float		projection[16];
-	t_vector	camera_pos;
-	t_vector	camera_front;
-	t_vector	camera_up;
-	t_vector	light_pos;
-	//Key
 	float		delta_time;
 	float		last_frame;
-	//Mouse
 	double		yaw;
 	double		pitch;
 	double		last_x;
 	double		last_y;
-	float		fov;
-	GLenum 		mode;
-}				t_tmp;
+}				t_gl_tools;
 
-t_datas			parse(char *filename);
-void			register_vertice(char *str, t_datas *datas);
-// void			register_texture(char *str, t_datas *datas);
-// void			register_normal(char *str, t_datas *datas);
-void			register_face(char *str, t_datas *datas);
-void			register_group_name(char *name, t_datas *datas);
-void			register_object_name(char *name, t_datas *datas);
-void 			insert_group(t_group **groups, char *name);
-void			insert_object(t_object **objects, char *name);
-void			print_datas(t_datas *datas);
-void			clear_datas(t_datas *datas);
+typedef struct	s_opengl
+{
+	GLFWwindow				*window;
+	t_gl_shaders			shaders;
+	t_gl_buffers			buffers;
+	t_gl_textures			textures;
+	t_gl_coordinate_system	c_systems;
+	t_gl_camera				camera;
+	t_gl_tools				tools;
+	GLenum 					mode;
+}				t_opengl;
 
 
 /*
@@ -149,60 +87,27 @@ void			clear_datas(t_datas *datas);
 
 GLFWwindow		*init_window(void);
 GLuint			init_shader(char *vs_filename, char *fs_filename);
-void			init_buffers(t_opengl *opengl);
-void			clear_ressources(GLuint *vao, GLuint *vbo, GLuint *ebo);
-void			init_textures(t_opengl *opengl);
-
+void			init_buffers(t_gl_buffers *buffers, t_mesh *mesh);
+GLuint			init_textures(char *filename);
+void			init_camera(t_gl_camera *camera);
+void			init_coordinate_systems(t_gl_coordinate_system *c_systems);
+void			update_coordinate_systems(t_gl_coordinate_system *c_systems,
+t_gl_camera *camera, float angle);
+void			init_tools(t_gl_tools *tools);
+void			update_tools(t_gl_tools *tools);
+void			clear_ressources(t_gl_buffers *buffers);
 void 			framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void			key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-void 			scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void 			mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void			mouse_input(GLFWwindow *window, t_gl_camera *camera, t_gl_tools *tools);
+void 			key_input(GLFWwindow *window, t_gl_camera *camera, float delta_time);
+void	set_matrice(GLuint shader, char *str, GLfloat *matrice);
+void	set_vector(GLuint shader, char *str, t_vector vector);
+void	set_int(GLuint shader, char *str, GLint value);
+void	set_float(GLuint shader, char *str, GLfloat value);
 /*
 **	OTHER
 */
 
 unsigned char	*read_bmp(char *filename, int *width, int *height);
 
-static const t_register g_registers[] = {
-	// {
-	// 	"vn",
-	// 	&register_normal
-	// },
-	// {
-	// 	"vt",
-	// 	&register_texture
-	// },
-	{
-		"o",
-		&register_object_name
-	},
-	{
-		"g",
-		&register_group_name
-	},
-	{
-		"v",
-		&register_vertice
-	},
-	{
-		"f",
-		&register_face
-	}
-};
 
 #endif
-
-/*
-**	Vertices
-**	 v: X Y Z W with W optional . Default 1.0
-**	 Texture
-**	 vt: U V W with [V,W] optional between 0.0-1.0. Default  0.0
-**	 Vertex
-**	 vn: X Y Z
-**	 Face
-**	 f 1 2 3
-**	   f 3/1 4/2 5/3
-**	   f 6/4/1 3/5/3 7/6/5
-**	   f 7//1 8//2 9//3
-**	   f ...
-*/

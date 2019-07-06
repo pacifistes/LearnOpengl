@@ -12,14 +12,19 @@ GLFWINCL = /Users/bbrunell/.brew/Cellar/glfw/3.3/include
 LIBFTINCL = libftprintf/printf/includes/
 
 SRCS = main.c \
-	parser/parser.c \
-	parser/register_faces.c \
-	parser/register_names.c \
-	parser/datas_tools.c \
-	opengl/init_window.c \
-	opengl/init_shader.c \
-	opengl/init_buffers.c \
-	opengl/init_textures.c \
+	loader/loader.c \
+	loader/register_faces.c \
+	loader/register_names.c \
+	loader/datas_tools.c \
+	loader/clear_mesh.c \
+	opengl/window.c \
+	opengl/shader.c \
+	opengl/buffers.c \
+	opengl/textures.c \
+	opengl/camera.c \
+	opengl/coordinate_systems.c \
+	opengl/tools.c \
+	opengl/set_shaders_variables.c \
 	opengl/callbacks.c \
 	opengl/clear_ressources.c \
 	math/math1.c \

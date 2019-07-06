@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_callback.c                                     :+:      :+:    :+:   */
+/*   clear_mesh.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/12 15:16:19 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/05/12 15:29:57 by bbrunell         ###   ########.fr       */
+/*   Created: 2019/06/13 18:06:47 by bbrunell          #+#    #+#             */
+/*   Updated: 2019/06/25 15:45:43 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+void	clear_mesh(t_mesh *mesh) //TODO
 {
-	(void)scancode;
-	(void)mode;
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
+	(void)mesh;
 }
