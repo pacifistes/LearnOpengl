@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 09:25:09 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/09 16:57:15 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 19:14:51 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** image = read_bmp("./assets/container_diffuse.bmp", &width, &height);
 */
 
-GLuint	init_texture(char *filename)
+GLuint	load_texture(char *filename)
 {
 	GLuint			texture;
 	int				width;
@@ -35,4 +35,17 @@ GLuint	init_texture(char *filename)
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return (texture);
+}
+
+void	active_textures(t_gl_textures *textures)
+{
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textures->texture);
+}
+
+void	init_textures(t_gl_textures *textures, t_gl_shaders *shaders)
+{
+	textures->texture = load_texture("./assets/container_diffuse.bmp");
+	glUseProgram(shaders->shader);
+	glUniform1i(glGetUniformLocation(shaders->shader, "texture1"), 0);
 }

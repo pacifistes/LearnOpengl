@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 16:20:46 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/25 16:02:16 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 17:52:15 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ GLuint	create_shader(char *path, GLenum shader_type)
 	return (shader);
 }
 
-GLuint	init_shader(char *vs_filename, char *fs_filename)
+GLuint	load_shader(char *vs_filename, char *fs_filename)
 {
 	GLuint	vertex_shader;
 	GLuint	fragment_shader;
@@ -86,4 +86,9 @@ GLuint	init_shader(char *vs_filename, char *fs_filename)
 	if (!success)
 		ft_printf("Error compile shader program\n");
 	return (shader_program);
+}
+
+void	init_shaders(t_gl_shaders *shaders)
+{
+	shaders->shader = load_shader("./shaders/shader.vs", "./shaders/shader.fs");
 }

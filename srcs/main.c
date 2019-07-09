@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/09 16:57:17 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 19:14:34 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ void	loop(t_opengl *opengl, t_mesh *mesh)
 		init_coordinate_systems(&opengl->c_systems);
 		update_coordinate_systems(&opengl->c_systems, &opengl->camera, opengl->tools.angle);
 		send_coordinate_systems(&opengl->c_systems, opengl->shaders.shader);
-
-		// glActiveTexture(GL_TEXTURE0);
-		// glBindTexture(GL_TEXTURE_2D, opengl->textures.texture);
-
+		active_textures(&opengl->textures);
 		glUseProgram(opengl->shaders.shader);
 		glBindVertexArray(opengl->buffers.vao);
 		glDrawElements(GL_TRIANGLES, mesh->nbr_indices, GL_UNSIGNED_INT, 0);
@@ -45,8 +42,8 @@ void	run(t_mesh *mesh)
 	t_opengl opengl;
 
 	opengl.window = init_window();
-	opengl.shaders.shader = init_shader("./shaders/shader.vs", "./shaders/shader.fs");
-	opengl.textures.texture = init_texture("./assets/container_diffuse.bmp");
+	init_shaders(&opengl.shaders);
+	init_textures(&opengl.textures, &opengl.shaders);
 	init_buffers(&opengl.buffers, mesh);
 	init_camera(&opengl.camera);
 	init_coordinate_systems(&opengl.c_systems);

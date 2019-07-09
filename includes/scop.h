@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/09 16:57:15 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 17:45:29 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ typedef struct	s_opengl
 */
 
 GLFWwindow		*init_window(void);
-GLuint			init_shader(char *vs_filename, char *fs_filename);
+void			init_textures(t_gl_textures *textures, t_gl_shaders *shader);
+void			init_shaders(t_gl_shaders *shaders);
 void			init_buffers(t_gl_buffers *buffers, t_mesh *mesh);
-GLuint			init_texture(char *filename);
 void			init_camera(t_gl_camera *camera);
 void			init_coordinate_systems(t_gl_coordinate_system *c_systems);
 void			update_coordinate_systems(t_gl_coordinate_system *c_systems,
