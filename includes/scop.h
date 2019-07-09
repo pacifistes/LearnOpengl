@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/06 17:13:24 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 16:57:15 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,12 @@ typedef struct	s_opengl
 GLFWwindow		*init_window(void);
 GLuint			init_shader(char *vs_filename, char *fs_filename);
 void			init_buffers(t_gl_buffers *buffers, t_mesh *mesh);
-GLuint			init_textures(char *filename);
+GLuint			init_texture(char *filename);
 void			init_camera(t_gl_camera *camera);
 void			init_coordinate_systems(t_gl_coordinate_system *c_systems);
 void			update_coordinate_systems(t_gl_coordinate_system *c_systems,
 t_gl_camera *camera, float angle);
+void	send_coordinate_systems(t_gl_coordinate_system *c_systems, GLuint shader);
 void			init_tools(t_gl_tools *tools);
 void			update_tools(t_gl_tools *tools);
 void			clear_ressources(t_gl_buffers *buffers);
@@ -108,6 +109,5 @@ void	set_float(GLuint shader, char *str, GLfloat value);
 */
 
 unsigned char	*read_bmp(char *filename, int *width, int *height);
-
 
 #endif

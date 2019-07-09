@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 09:25:09 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/25 16:01:29 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 16:57:15 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** image = read_bmp("./assets/container_diffuse.bmp", &width, &height);
 */
 
-GLuint	init_textures(char *filename)
+GLuint	init_texture(char *filename)
 {
 	GLuint			texture;
 	int				width;

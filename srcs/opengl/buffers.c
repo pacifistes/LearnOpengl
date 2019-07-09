@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 17:54:51 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/06 17:13:01 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 15:06:48 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,15 @@
 
 void	init_buffers(t_gl_buffers *buffers, t_mesh *mesh)
 {
-	//  float vertices[] = {
-    //      0.5f,  0.5f, 0.0f,  // top right
-    //      0.5f, -0.5f, 0.0f,  // bottom right
-    //     -0.5f, -0.5f, 0.0f,  // bottom left
-    //     -0.5f,  0.5f, 0.0f   // top left 
-    // };
-    // unsigned int indices[] = {  // note that we start from 0!
-    //     0, 1, 3,  // first Triangle
-    //     1, 2, 3   // second Triangle
-    // };
-	(void)buffers;
-	(void)mesh;
 	glGenVertexArrays(1, &buffers->vao);
 	glGenBuffers(1, &buffers->vbo);
 	glGenBuffers(1, &buffers->ebo);
+	glBindVertexArray(buffers->vao);
 	glBindBuffer(GL_ARRAY_BUFFER, buffers->vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mesh->vertices), mesh->vertices,
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->nbr_vertices, mesh->vertices,
 	GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mesh->indices), mesh->indices,
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh->nbr_indices, mesh->indices,
 	GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);

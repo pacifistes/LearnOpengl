@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 16:08:57 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/25 16:02:58 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 15:30:06 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void mouse_input(GLFWwindow *window, t_gl_camera *camera, t_gl_tools *tools)
 		tools->last_y = y_pos;
 		first_mouse = 0;
 	}
-	tools->last_x = x_pos;
-	tools->last_y = y_pos;
 	tools->yaw += (x_pos - tools->last_x) * 0.1f;
 	tools->pitch += (tools->last_y - y_pos) * 0.1f;
+	tools->last_x = x_pos;
+	tools->last_y = y_pos;
 	if (tools->pitch > 89.0f)
 		tools->pitch = 89.0f;
 	if (tools->pitch < -89.0f)

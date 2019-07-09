@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 18:20:37 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/25 15:51:45 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 16:10:41 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,12 @@ t_gl_camera *camera, float angle)
 	look_at(c_systems->view, camera->pos, vec_add(camera->pos,
 	camera->front), camera->up);
 	// translate(c_systems->model, new_vector(0.0f, 0.0f, -3.0f));
-	rotate_with_axis(c_systems->model, angle, new_vector(1.0f, 0.3f, 0.5f));
+	rotate_with_axis(c_systems->model, angle, new_vector(0.0f, 1.0f, 0.0f));
+}
+
+void	send_coordinate_systems(t_gl_coordinate_system *c_systems, GLuint shader)
+{
+	set_matrice(shader, "model", c_systems->model);
+	set_matrice(shader, "view", c_systems->view);
+	set_matrice(shader, "projection", c_systems->projection);
 }

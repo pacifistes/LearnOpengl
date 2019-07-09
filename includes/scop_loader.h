@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 15:08:03 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/13 21:47:41 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/09 15:02:15 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_mesh
 	float			*vertices;
 	unsigned int	*indices;
 	unsigned int	nbr_indices;
+	unsigned int	nbr_vertices;
 }				t_mesh;
 
 typedef struct	s_register
