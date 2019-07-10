@@ -30,6 +30,7 @@ SRCS = main.c \
 	math/math1.c \
 	math/math2.c \
 	math/math3.c \
+	math/math4.c \
 	other/read_bmp.c 
 
 SRC = $(addprefix $(SRCSPATH), $(SRCS))

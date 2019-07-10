@@ -6,26 +6,26 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/09 19:14:34 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:50:10 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-
 void	loop(t_opengl *opengl, t_mesh *mesh)
 {
 	while (!glfwWindowShouldClose(opengl->window))
 	{
-		update_tools(&opengl->tools);
 		key_input(opengl->window, &opengl->camera,
 		opengl->tools.delta_time);
 		mouse_input(opengl->window, &opengl->camera, &opengl->tools);
+		update_tools(&opengl->tools);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glPolygonMode(GL_FRONT_AND_BACK, opengl->mode);
 		init_coordinate_systems(&opengl->c_systems);
-		update_coordinate_systems(&opengl->c_systems, &opengl->camera, opengl->tools.angle);
+		update_coordinate_systems(&opengl->c_systems, &opengl->camera,
+		opengl->tools.angle);
 		send_coordinate_systems(&opengl->c_systems, opengl->shaders.shader);
 		active_textures(&opengl->textures);
 		glUseProgram(opengl->shaders.shader);
@@ -49,12 +49,12 @@ void	run(t_mesh *mesh)
 	init_coordinate_systems(&opengl.c_systems);
 	init_tools(&opengl.tools);
 	loop(&opengl, mesh);
-	// clear_ressources(&opengl.buffers);
+	clear_ressources(&opengl.buffers);
 }
 
 t_mesh	*cube_mesh(void)
 {
-	float vertices[] = {
+	static float		vertices[] = {
 		0.500000, -0.500000, -0.500000,
 		0.500000, -0.500000, 0.500000,
 		-0.500000, -0.500000, 0.500000,
@@ -64,22 +64,13 @@ t_mesh	*cube_mesh(void)
 		-0.500000, 0.500000, 0.500000,
 		-0.500000, 0.500000, -0.500000
 	};
-	unsigned int indices[] = {
-		1, 3, 0,
-		7, 5, 4,
-		4, 1, 0,
-		5, 2, 1,
-		2, 7, 3,
-		0, 7, 4,
-		1, 2, 3,
-		7, 6, 5,
-		4, 5, 1,
-		5, 6, 2,
-		2, 6, 7,
-		0, 3, 7,
+	static unsigned int	indices[] = {
+		1, 3, 0, 7, 5, 4, 4, 1, 0, 5, 2, 1,
+		2, 7, 3, 0, 7, 4, 1, 2, 3, 7, 6, 5,
+		4, 5, 1, 5, 6, 2, 2, 6, 7, 0, 3, 7,
 	};
-	t_mesh *mesh;
-	
+	t_mesh				*mesh;
+
 	mesh = ft_memalloc(sizeof(t_mesh));
 	mesh->vertices = (float *)malloc(sizeof(float) * 24);
 	ft_memcpy(mesh->vertices, vertices, sizeof(float) * 24);
@@ -92,18 +83,18 @@ t_mesh	*cube_mesh(void)
 
 t_mesh	*triangle_mesh(void)
 {
-	float vertices[] = {
+	static float		vertices[] = {
 		0.5f, 0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		-0.5f, -0.5f, 0.0f,
 		-0.5f, 0.5f, 0.0f
 	};
-	unsigned int indices[] = {
+	static unsigned int	indices[] = {
 		0, 1, 3,
 		1, 2, 3
 	};
-	t_mesh *mesh;
-	
+	t_mesh				*mesh;
+
 	mesh = ft_memalloc(sizeof(t_mesh));
 	mesh->vertices = (float *)malloc(sizeof(float) * 12);
 	ft_memcpy(mesh->vertices, vertices, sizeof(float) * 12);
@@ -113,6 +104,11 @@ t_mesh	*triangle_mesh(void)
 	mesh->nbr_vertices = 12;
 	return (mesh);
 }
+
+/*
+**	mesh = cube_mesh();
+**	mesh = triangle_mesh();
+*/
 
 int		main(int ac, char **args)
 {
@@ -127,8 +123,6 @@ int		main(int ac, char **args)
 	if (mesh == NULL)
 	{
 		mesh = cube_mesh();
-		// mesh = triangle_mesh();
-		// ft_printf("%d\n", mesh->nbr_indices);
 		// ft_printf("Error in file.");
 		// return (0);
 	}

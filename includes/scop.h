@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/09 17:45:29 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:35:17 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,23 @@ typedef struct	s_gl_buffers
 	unsigned int		ebo;
 }				t_gl_buffers;
 
-typedef struct s_gl_camera
+typedef struct	s_gl_camera
 {
 	t_vector	pos;
 	t_vector	front;
 	t_vector	up;
 }				t_gl_camera;
 
-typedef struct s_gl_coordinate_system
+typedef struct	s_gl_coordinate_system
 {
 	GLfloat		model[16];
 	GLfloat		view[16];
 	GLfloat		projection[16];
 }				t_gl_coordinate_system;
 
-
-typedef struct s_gl_tools
+typedef struct	s_gl_tools
 {
-	float 		angle;
+	float		angle;
 	float		delta_time;
 	float		last_frame;
 	double		yaw;
@@ -77,9 +76,8 @@ typedef struct	s_opengl
 	t_gl_coordinate_system	c_systems;
 	t_gl_camera				camera;
 	t_gl_tools				tools;
-	GLenum 					mode;
+	GLenum					mode;
 }				t_opengl;
-
 
 /*
 **	OPENGL
@@ -90,20 +88,26 @@ void			init_textures(t_gl_textures *textures, t_gl_shaders *shader);
 void			init_shaders(t_gl_shaders *shaders);
 void			init_buffers(t_gl_buffers *buffers, t_mesh *mesh);
 void			init_camera(t_gl_camera *camera);
+void			active_textures(t_gl_textures *textures);
 void			init_coordinate_systems(t_gl_coordinate_system *c_systems);
 void			update_coordinate_systems(t_gl_coordinate_system *c_systems,
 t_gl_camera *camera, float angle);
-void	send_coordinate_systems(t_gl_coordinate_system *c_systems, GLuint shader);
+void			send_coordinate_systems(t_gl_coordinate_system *c_systems,
+GLuint shader);
 void			init_tools(t_gl_tools *tools);
 void			update_tools(t_gl_tools *tools);
 void			clear_ressources(t_gl_buffers *buffers);
-void 			framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void			mouse_input(GLFWwindow *window, t_gl_camera *camera, t_gl_tools *tools);
-void 			key_input(GLFWwindow *window, t_gl_camera *camera, float delta_time);
-void	set_matrice(GLuint shader, char *str, GLfloat *matrice);
-void	set_vector(GLuint shader, char *str, t_vector vector);
-void	set_int(GLuint shader, char *str, GLint value);
-void	set_float(GLuint shader, char *str, GLfloat value);
+void			framebuffer_size_callback(GLFWwindow *window, int width,
+int height);
+void			mouse_input(GLFWwindow *window, t_gl_camera *camera,
+t_gl_tools *tools);
+void			key_input(GLFWwindow *window, t_gl_camera *camera,
+float delta_time);
+void			set_matrice(GLuint shader, char *str, GLfloat *matrice);
+void			set_vector(GLuint shader, char *str, t_vector vector);
+void			set_int(GLuint shader, char *str, GLint value);
+void			set_float(GLuint shader, char *str, GLfloat value);
+
 /*
 **	OTHER
 */

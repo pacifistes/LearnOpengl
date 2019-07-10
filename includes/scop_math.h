@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/13 21:19:20 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:29:53 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define PI 3.14159265359
 # define RAD_TO_DEG (180.0 / PI)
 # define DEG_TO_RAD (PI / 180.0)
-
 
 typedef struct	s_vector
 {
@@ -47,6 +46,5 @@ void			translate(float matrice[16], t_vector vector);
 t_vector		vec_sub(t_vector v1, t_vector v2);
 t_vector		vec_add(t_vector v1, t_vector v2);
 void			print_matrice(float matrice[16]);
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 15:08:03 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/09 15:02:15 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:29:35 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct	s_datas
 	t_normal	*normals;
 }				t_datas;
 
-typedef struct s_mesh
+typedef struct	s_mesh
 {
 	float			*vertices;
 	unsigned int	*indices;

@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 18:44:36 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/09 15:30:59 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:54:03 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_tools(t_gl_tools *tools)
 	tools->angle = 0.0f;
 	tools->delta_time = 0.0f;
 	tools->last_frame = 0.0f;
-	tools->yaw  = -90.0f;
+	tools->yaw = -90.0f;
 	tools->pitch = 0.0f;
 	tools->last_x = WIDTH / 2.0f;
 	tools->last_y = HEIGHT / 2.0f;

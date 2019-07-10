@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 13:54:08 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/13 21:19:06 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:25:25 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,42 +34,26 @@ void	print_matrice(float matrice[16])
 	}
 }
 
-
 void	perspective(float matrice[16], float fov, float aspect)
 {
 	float tan_half_fov;
 	float z_near;
 	float z_far;
 	float z_range;
-	float angle;
-	float width;
 	float height;
-	float l;
-	float r;
-	float t;
-	float b;
 
-
-	angle = fov * DEG_TO_RAD;
 	z_near = 0.1f;
 	z_far = 100.0f;
 	z_range = z_far - z_near;
-
 	init_matrice(matrice, 1.0f);
-	tan_half_fov = tan(angle * 0.5);
-	height = z_near * tan_half_fov;                 // half height of near plane
-    width = height * aspect; 
-	l = -width;
-	r = width;
-	b = -height;
-	t = height;
-
-	matrice[0] =  (2.0 * z_near) / (r - l) ;
-	matrice[8] =  (r + l) / (r - l) ;
-	matrice[5] = (2.0 * z_near) / (t - b);
-	matrice[9] =  (t + b) / (t - b) ;
+	tan_half_fov = tan(fov * DEG_TO_RAD * 0.5);
+	height = z_near * tan_half_fov;
+	matrice[0] = (2.0 * z_near) / ((height * aspect) + (height * aspect));
+	matrice[8] = 0;
+	matrice[5] = (2.0 * z_near) / (height + height);
+	matrice[9] = (height - height) / (height + height);
 	matrice[10] = -(z_far + z_near) / z_range;
-	matrice[11] = 	-1;
+	matrice[11] = -1;
 	matrice[14] = -(2.0f * z_far * z_near) / z_range;
 	matrice[15] = 0;
 }
@@ -81,7 +65,8 @@ void	translate(float matrice[16], t_vector vector)
 	matrice[14] = vector.z;
 }
 
-void		look_at(float matrice[16], t_vector eye, t_vector center, t_vector up)
+void	look_at(float matrice[16], t_vector eye, t_vector center,
+t_vector up)
 {
 	t_vector f;
 	t_vector s;
