@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 16:08:57 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/10 18:01:56 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/17 20:12:30 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	framebuffer_size_callback(GLFWwindow *window, int width, int height)
 
 void	key_input(GLFWwindow *window, t_gl_camera *camera, float delta_time)
 {
+	static int last_mode_key = GLFW_RELEASE;
 	float		camera_speed;
-	t_vector	value;
 
 	camera_speed = 10.0f * delta_time;
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -44,6 +44,12 @@ void	key_input(GLFWwindow *window, t_gl_camera *camera, float delta_time)
 		camera->pos = vec_sub(camera->pos, scale(camera->up, camera_speed));
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		camera->pos = vec_add(camera->pos, scale(camera->up, camera_speed));
+	if (last_mode_key == GLFW_RELEASE && glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
+		change_polygon_mode();
+		last_mode_key = GLFW_PRESS;
+	}
+	else if (last_mode_key == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_C) == GLFW_RELEASE)
+		last_mode_key = GLFW_RELEASE;
 }
 
 void	mouse_input(GLFWwindow *window, t_gl_camera *camera, t_gl_tools *tools)

@@ -81,7 +81,7 @@ print_m.c          print_uox.c\
 SRC = 	$(addprefix $(addprefix $(LIBPATH), $(SRCSPATH)), $(SRCS_LIBFT))\
 		$(addprefix $(addprefix $(PRINTFPATH), $(SRCSPATH)), $(SRCS_PRINTF))\
 
-WFLAGS = -Wall -Werror -Wextra
+WFLAGS = -Wall -Werror -Wextra 
 
 CC = gcc -g
 

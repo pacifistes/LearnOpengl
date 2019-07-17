@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/10 17:50:10 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/17 17:50:05 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	loop(t_opengl *opengl, t_mesh *mesh)
 		update_tools(&opengl->tools);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glPolygonMode(GL_FRONT_AND_BACK, opengl->mode);
+		// glPolygonMode(GL_FRONT_AND_BACK, opengl->mode);
 		init_coordinate_systems(&opengl->c_systems);
 		update_coordinate_systems(&opengl->c_systems, &opengl->camera,
 		opengl->tools.angle);
@@ -48,6 +48,7 @@ void	run(t_mesh *mesh)
 	init_camera(&opengl.camera);
 	init_coordinate_systems(&opengl.c_systems);
 	init_tools(&opengl.tools);
+	opengl.mode = GL_LINE;
 	loop(&opengl, mesh);
 	clear_ressources(&opengl.buffers);
 }

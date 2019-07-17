@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/10 17:35:17 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/07/17 17:59:06 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void			set_matrice(GLuint shader, char *str, GLfloat *matrice);
 void			set_vector(GLuint shader, char *str, t_vector vector);
 void			set_int(GLuint shader, char *str, GLint value);
 void			set_float(GLuint shader, char *str, GLfloat value);
-
+void			change_polygon_mode();
 /*
 **	OTHER
 */

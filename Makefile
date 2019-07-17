@@ -27,6 +27,7 @@ SRCS = main.c \
 	opengl/set_shaders_variables.c \
 	opengl/callbacks.c \
 	opengl/clear_ressources.c \
+	opengl/polygon_mode.c \
 	math/math1.c \
 	math/math2.c \
 	math/math3.c \
