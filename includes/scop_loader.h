@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 15:08:03 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/10 17:29:35 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/03 00:24:18 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef	struct	s_indice
 
 typedef	struct	s_face
 {
-	t_indice	*indices;
+	t_indice	indices[3];
 	void		*next;
 }				t_face;
 
@@ -83,14 +83,14 @@ void			clear_datas(t_datas *datas);
 void			clear_mesh(t_mesh *mesh);
 
 static const t_register g_registers[] = {
-	{
-		"vn",
-		&register_normal
-	},
-	{
-		"vt",
-		&register_texture
-	},
+	// {
+	// 	"vn",
+	// 	&register_normal
+	// },
+	// {
+	// 	"vt",
+	// 	&register_texture
+	// },
 	{
 		"v",
 		&register_vertice

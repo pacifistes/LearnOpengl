@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 18:44:36 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/10 17:54:03 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/03 03:14:09 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	update_tools(t_gl_tools *tools)
 	current_frame = glfwGetTime();
 	tools->delta_time = current_frame - tools->last_frame;
 	tools->last_frame = current_frame;
-	tools->angle = fmodf(tools->angle + 0.1, 360.f);
+	tools->angle = fmodf(tools->angle + 0.0, 360.f);
 }

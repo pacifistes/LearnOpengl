@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 09:25:09 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/10 17:51:50 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/03 05:04:44 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ GLuint	load_texture(char *filename)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	image = read_bmp(filename, &width, &height);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
-	GL_BGRA, GL_UNSIGNED_BYTE, image);
+	GL_BGR, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return (texture);
@@ -45,7 +45,7 @@ void	active_textures(t_gl_textures *textures)
 
 void	init_textures(t_gl_textures *textures, t_gl_shaders *shaders)
 {
-	textures->texture = load_texture("./assets/container_diffuse.bmp");
+	textures->texture = load_texture("./assets/garfield.bmp");
 	glUseProgram(shaders->shader);
 	glUniform1i(glGetUniformLocation(shaders->shader, "texture1"), 0);
 }

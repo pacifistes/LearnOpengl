@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/17 17:50:05 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/03 05:05:48 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	loop(t_opengl *opengl, t_mesh *mesh)
 		update_tools(&opengl->tools);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// glPolygonMode(GL_FRONT_AND_BACK, opengl->mode);
 		init_coordinate_systems(&opengl->c_systems);
 		update_coordinate_systems(&opengl->c_systems, &opengl->camera,
 		opengl->tools.angle);
@@ -55,15 +54,25 @@ void	run(t_mesh *mesh)
 
 t_mesh	*cube_mesh(void)
 {
+	// static float		vertices[] = {
+	// 	0.500000, -0.500000, -0.500000, 1.0,
+	// 	0.500000, -0.500000, 0.500000, 1.0,
+	// 	-0.500000, -0.500000, 0.500000,1.0,
+	// 	-0.500000, -0.500000, -0.500000,1.0,
+	// 	0.500000, 0.500000, -0.5000000,1.0,
+	// 	0.500000, 0.500000, 0.500000,1.0,
+	// 	-0.500000, 0.500000, 0.500000,1.0,
+	// 	-0.500000, 0.500000, -0.500000, 1.0
+	// };
 	static float		vertices[] = {
-		0.500000, -0.500000, -0.500000,
-		0.500000, -0.500000, 0.500000,
-		-0.500000, -0.500000, 0.500000,
-		-0.500000, -0.500000, -0.500000,
-		0.500000, 0.500000, -0.5000000,
-		0.500000, 0.500000, 0.500000,
-		-0.500000, 0.500000, 0.500000,
-		-0.500000, 0.500000, -0.500000
+	1.000000, 0.500000, 0.500000, 1.000000,
+	1.000000, 0.500000, 1.000000, 1.000000,
+	0.500000, 0.500000, 1.000000, 1.000000,
+	0.500000, 0.500000, 0.500000, 1.000000,
+	1.000000, 1.000000, 0.5, 1.000000,
+	0.999999, 1.000000, 1.000001, 1.000000,
+	0.500000, 1.000000, 1.000000, 1.000000,
+	0.500000, 1.000000, 0.500000, 1.000000
 	};
 	static unsigned int	indices[] = {
 		1, 3, 0, 7, 5, 4, 4, 1, 0, 5, 2, 1,
@@ -73,12 +82,12 @@ t_mesh	*cube_mesh(void)
 	t_mesh				*mesh;
 
 	mesh = ft_memalloc(sizeof(t_mesh));
-	mesh->vertices = (float *)malloc(sizeof(float) * 24);
-	ft_memcpy(mesh->vertices, vertices, sizeof(float) * 24);
+	mesh->vertices = (float *)malloc(sizeof(float) * 32);
+	ft_memcpy(mesh->vertices, vertices, sizeof(float) * 32);
 	mesh->indices = (unsigned int *)malloc(sizeof(unsigned int) * 36);
 	ft_memcpy(mesh->indices, indices, sizeof(unsigned int) * 36);
 	mesh->nbr_indices = 36;
-	mesh->nbr_vertices = 24;
+	mesh->nbr_vertices = 32;
 	return (mesh);
 }
 
@@ -114,6 +123,7 @@ t_mesh	*triangle_mesh(void)
 int		main(int ac, char **args)
 {
 	t_mesh	*mesh;
+	unsigned int i;
 
 	if (ac != 2)
 	{
@@ -121,11 +131,25 @@ int		main(int ac, char **args)
 		return (0);
 	}
 	mesh = load(args[1]);
+	// mesh = NULL;
+	(void)args;
 	if (mesh == NULL)
 	{
 		mesh = cube_mesh();
-		// ft_printf("Error in file.");
+		ft_printf("Error in file.");
 		// return (0);
+	}
+	i = 0;
+	while (i < mesh->nbr_vertices)
+	{
+		printf("v %f %f %f %f\n", mesh->vertices[i], mesh->vertices[i + 1], mesh->vertices[i + 2], mesh->vertices[i + 3]);
+		i += 4;
+	}
+	i = 0;
+	while (i < mesh->nbr_indices)
+	{
+		printf("f %u %u %u\n", mesh->indices[i], mesh->indices[i + 1], mesh->indices[i + 2]);
+		i += 3;
 	}
 	run(mesh);
 	clear_mesh(mesh);

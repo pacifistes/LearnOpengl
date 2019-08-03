@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 02:19:05 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/25 15:56:24 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/03 03:09:43 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,25 @@ void	register_vertice(char *str, t_datas *datas)
 {
 	(void)datas;
 	(void)str;
-	// t_vertice	*tmp;
-	// t_vertice	*temp;
+	t_vertice	*tmp;
+	t_vertice	*temp;
 
-	// if (str[0] != ' ')
-	// 	return ;
-	// tmp = ft_memalloc(sizeof(t_vertice));
-	// if (!tmp)
-	// 	return ;
-	// tmp->w = 1.0;
-	// if (sscanf(str, " %lf %lf %lf %lf", &tmp->x, &tmp->y, &tmp->z, &tmp->w)< 3)
-	// {
-	// 	free(tmp);
-	// 	tmp = NULL;
-	// 	return ;
-	// }
-	// temp = datas->vertices;
-	// tmp->next = temp;
-	// datas->vertices = tmp;
+	if (str[0] != ' ')
+		return ;
+	tmp = ft_memalloc(sizeof(t_vertice));
+	if (!tmp)
+		return ;
+	tmp->w = 1.0;
+	if (sscanf(str, " %lf %lf %lf %lf", &tmp->x, &tmp->y, &tmp->z, &tmp->w)< 3)
+	{
+		free(tmp);
+		tmp = NULL;
+		return ;
+	}
+	temp = datas->vertices;
+	tmp->next = temp;
+	datas->vertices = tmp;
 }
-
-// static int	is_valid_texture(t_texture *tmp)
-// {
-// 	if (tmp->u < 0.0 || tmp->v < 0.0 || tmp->w < 0.0 || tmp->u > 0.0 || tmp->v > 0.0 || tmp->w > 0.0)
-// 		return (0);
-// 	return (1);
-// }
 
 void		register_texture(char *str, t_datas *datas)
 {
@@ -72,47 +65,47 @@ void	register_normal(char *str, t_datas *datas)
 	(void)datas;
 }
 
+void	add_face(t_datas *datas, t_face face)
+{
+	t_face	*tmp;
+	t_face	*temp;
+
+	tmp = ft_memalloc(sizeof(t_face));
+	ft_memcpy(tmp, &face, sizeof(face));
+	if (!tmp)
+		return ;
+	temp = datas->faces;
+	tmp->next = temp;
+	datas->faces = tmp;
+}
+
 void	register_face(char *str, t_datas *datas)
 {
-	(void)datas;
-	(void)str;
-	// t_face	*tmp;
-	// t_face	*temp;
-	// int		i;
+	t_indice	indices[4];
+	t_face		face;
+	int			nbr_success;
 
-	// if (str[0] != ' ')
-	// 	return ;
-	// tmp = ft_memalloc(sizeof(t_face));
-	// if (!tmp)
-	// 	return ;
-	// tmp->indices = (t_indice *)malloc(sizeof(t_indice) * 3);
-	// if (!tmp->indices)
-	// 	return ;
-	// i = 0;
-	// while (i < 3)
-	// {
-	// 	tmp->indices[i].vertice = -1;
-	// 	tmp->indices[i].texture= -1;
-	// 	tmp->indices[i].normal = -1;
-	// 	i++;
-	// }
-	// if (sscanf(str, " %d %d %d", &tmp->indices[0].vertice, &tmp->indices[1].vertice, &tmp->indices[0].vertice) != 3)
-	// {
-	// 	i = 0;
-	// 	while (i < 3)
-	// 	{
-	// 		free(&tmp->indices[i]);
-	// 		i++;
-	// 	}
-	// 	free(tmp);
-	// 	tmp = NULL;
-	// 	return ;
-	// }
-	// if (datas->objects == NULL)
-	// 	insert_object(&datas->objects, ft_strdup("undifined"));
-	// if (datas->objects->groups == NULL)
-	// 	insert_group(&datas->objects->groups, ft_strdup("undifined"));
-	// temp = datas->objects->groups->faces;
-	// tmp->next = temp;
-	// datas->objects->groups->faces = tmp;
+	ft_bzero(indices, sizeof(t_indice) * 4);
+	nbr_success = sscanf(str, " %d %d %d %d", &indices[0].vertice,
+	&indices[1].vertice, &indices[2].vertice, &indices[3].vertice);
+	if (nbr_success < 3)
+		return;
+	if (nbr_success == 3)
+	{
+		face.indices[0] = indices[0];
+		face.indices[1] = indices[1];
+		face.indices[2] = indices[2];
+		add_face(datas, face);
+	}
+	else if (nbr_success == 4)
+	{
+		face.indices[0] = indices[0];
+		face.indices[1] = indices[1];
+		face.indices[2] = indices[3];
+		add_face(datas, face);
+		face.indices[0] = indices[1];
+		face.indices[1] = indices[2];
+		face.indices[2] = indices[3];
+		add_face(datas, face);
+	}
 }

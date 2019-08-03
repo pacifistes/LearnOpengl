@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 17:54:51 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/10 18:07:57 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/03 01:55:55 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_buffers(t_gl_buffers *buffers, t_mesh *mesh)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers->ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
 	sizeof(unsigned int) * mesh->nbr_indices, mesh->indices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
 	(void*)0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
