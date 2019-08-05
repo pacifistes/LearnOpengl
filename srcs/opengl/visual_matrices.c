@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coordinate_systems.c                               :+:      :+:    :+:   */
+/*   visual_matrices.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,27 +12,19 @@
 
 #include "scop.h"
 
-void	init_coordinate_systems(t_gl_coordinate_system *c_systems)
+void	init_visual_matrices(t_gl_coordinate_system *v_matrices)
 {
-	init_matrice(c_systems->model, 1.0f);
-	init_matrice(c_systems->view, 1.0f);
-	init_matrice(c_systems->projection, 1.0f);
+	init_matrice(v_matrices->model, 1.0f);
+	init_matrice(v_matrices->view, 1.0f);
+	init_matrice(v_matrices->projection, 1.0f);
 }
 
-void	update_coordinate_systems(t_gl_coordinate_system *c_systems,
-t_gl_camera *camera, float angle)
+void	update_visual_matrices(t_gl_coordinate_system *v_matrices,
+t_gl_camera *camera, t_gl_env *env)
 {
-	perspective(c_systems->projection, 45.0f, WIDTH / HEIGHT);
-	look_at(c_systems->view, camera->pos, vec_add(camera->pos,
+	init_visual_matrices(v_matrices);
+	perspective(v_matrices->projection, 45.0f, WIDTH / HEIGHT);
+	look_at(v_matrices->view, camera->pos, vec_add(camera->pos,
 	camera->front), camera->up);
-	translate(c_systems->model, new_vector(0.0f, 0.0f, -3.0f));
-	rotate_with_axis(c_systems->model, angle, new_vector(0.0f, 1.0f, 0.0f));
-}
-
-void	send_coordinate_systems(t_gl_coordinate_system *c_systems,
-GLuint shader)
-{
-	set_matrice(shader, "model", c_systems->model);
-	set_matrice(shader, "view", c_systems->view);
-	set_matrice(shader, "projection", c_systems->projection);
+	rotate_with_angle(v_matrices->model, new_vector(env->angle_x, env->angle_y, env->angle_z));;
 }

@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/07/17 17:59:06 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/05 01:00:52 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@
 # include "scop_loader.h"
 # include <fcntl.h>
 # include <time.h>
+# include <math.h>
 # include <GL/glew.h>
 # include <GLFW/glfw3.h>
 
 # define SIZE_STOCKAGE 50
 # define WIDTH 800.0f
 # define HEIGHT 800.0f
+# define KEY_7 0
+# define KEY_8 1
+# define KEY_9 2
+# define KEY_C 3
 
 typedef struct	s_gl_shaders
 {
@@ -56,16 +61,22 @@ typedef struct	s_gl_coordinate_system
 	GLfloat		projection[16];
 }				t_gl_coordinate_system;
 
-typedef struct	s_gl_tools
+typedef struct	s_gl_env
 {
-	float		angle;
+	float		angle_x;
+	float		angle_y;
+	float		angle_z;
+	int			rot_x;
+	int			rot_y;
+	int			rot_z;
+	float		texture_ratio;
 	float		delta_time;
 	float		last_frame;
 	double		yaw;
 	double		pitch;
 	double		last_x;
 	double		last_y;
-}				t_gl_tools;
+}				t_gl_env;
 
 typedef struct	s_opengl
 {
@@ -73,10 +84,9 @@ typedef struct	s_opengl
 	t_gl_shaders			shaders;
 	t_gl_buffers			buffers;
 	t_gl_textures			textures;
-	t_gl_coordinate_system	c_systems;
+	t_gl_coordinate_system	v_matrices;
 	t_gl_camera				camera;
-	t_gl_tools				tools;
-	GLenum					mode;
+	t_gl_env				env;
 }				t_opengl;
 
 /*
@@ -89,18 +99,14 @@ void			init_shaders(t_gl_shaders *shaders);
 void			init_buffers(t_gl_buffers *buffers, t_mesh *mesh);
 void			init_camera(t_gl_camera *camera);
 void			active_textures(t_gl_textures *textures);
-void			init_coordinate_systems(t_gl_coordinate_system *c_systems);
-void			update_coordinate_systems(t_gl_coordinate_system *c_systems,
-t_gl_camera *camera, float angle);
-void			send_coordinate_systems(t_gl_coordinate_system *c_systems,
-GLuint shader);
-void			init_tools(t_gl_tools *tools);
-void			update_tools(t_gl_tools *tools);
+void			init_visual_matrices(t_gl_coordinate_system *v_matrices);
+void			update_visual_matrices(t_gl_coordinate_system *v_matrices,
+t_gl_camera *camera, t_gl_env *env);
+void			init_env(t_gl_env *env);
+void			update_env(t_gl_env *env);
 void			clear_ressources(t_gl_buffers *buffers);
-void			framebuffer_size_callback(GLFWwindow *window, int width,
-int height);
 void			mouse_input(GLFWwindow *window, t_gl_camera *camera,
-t_gl_tools *tools);
+t_gl_env *env);
 void			key_input(GLFWwindow *window, t_gl_camera *camera,
 float delta_time);
 void			set_matrice(GLuint shader, char *str, GLfloat *matrice);
@@ -108,6 +114,8 @@ void			set_vector(GLuint shader, char *str, t_vector vector);
 void			set_int(GLuint shader, char *str, GLint value);
 void			set_float(GLuint shader, char *str, GLfloat value);
 void			change_polygon_mode();
+void			inputs(t_opengl *opengl);
+
 /*
 **	OTHER
 */

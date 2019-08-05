@@ -1,16 +1,16 @@
 #version 410 core
 
-layout (location = 0) in vec3 aPos;
 
-out vec4 FragColor;
-in vec2 TexCoord;
 
-uniform sampler2D texture1;
-uniform sampler2D texture2;
+out vec4 fragment_color;
+in vec2 texture_coord;
+flat in vec3 face_color;
+
+uniform float texture_ratio;
+uniform sampler2D obj_texture;
 
 void main()
 {
-	// FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);
-	FragColor = texture(texture1, TexCoord);
-	// FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+	fragment_color = vec4(texture(obj_texture, texture_coord).rgb * texture_ratio
+	+ face_color * (1.0 - texture_ratio), 1.0f);
 }

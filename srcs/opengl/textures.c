@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 09:25:09 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/08/03 05:04:44 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/04 01:39:52 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ void	init_textures(t_gl_textures *textures, t_gl_shaders *shaders)
 {
 	textures->texture = load_texture("./assets/garfield.bmp");
 	glUseProgram(shaders->shader);
-	glUniform1i(glGetUniformLocation(shaders->shader, "texture1"), 0);
+	glUniform1i(glGetUniformLocation(shaders->shader, "obj_texture"), 0);
 }

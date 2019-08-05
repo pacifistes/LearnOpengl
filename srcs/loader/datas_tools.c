@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   datas_tools.c                                      :+:      :+:    :+:   */
+/*   datas_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,44 +12,12 @@
 
 #include "scop.h"
 
-// void	insert_object(t_object **objects, char *name)
-// {
-// 	(void)objects;
-// 	(void)name;
-// 	// t_object *tmp;
-// 	// t_object *temp;
-
-// 	// tmp = ft_memalloc(sizeof(t_object));
-// 	// if (!tmp)
-// 	// 	return ;
-// 	// tmp->name = name;
-// 	// temp = *objects;
-// 	// tmp->next = temp;
-// 	// *objects = tmp;
-// }
-
-// void	insert_group(t_group **groups, char *name)
-// {
-// 	(void)groups;
-// 	(void)name;
-// 	// t_group *tmp;
-// 	// t_group *temp;
-
-// 	// tmp = ft_memalloc(sizeof(t_group));
-// 	// if (!tmp)
-// 	// 	return ;
-// 	// tmp->name = name;
-// 	// temp = *groups;
-// 	// tmp->next = temp;
-// 	// *groups = tmp;
-// }
-
 void	print_datas(t_datas *datas)
 {
 	(void)datas;
 	while (datas->vertices)
 	{
-		printf("v %f %f %f %f\n", datas->vertices->x, datas->vertices->y, datas->vertices->z, datas->vertices->w);
+		printf("v %f %f %f\n", datas->vertices->x, datas->vertices->y, datas->vertices->z);
 		datas->vertices = datas->vertices->next;
 	}
 	while (datas->faces)

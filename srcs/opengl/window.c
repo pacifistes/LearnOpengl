@@ -6,11 +6,17 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 12:40:56 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/06/13 20:58:14 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/04 02:48:19 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+static void	framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
+	(void)window;
+	glViewport(0, 0, width, height);
+}
 
 static void	init_context(void)
 {

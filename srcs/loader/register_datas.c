@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   register_faces.c                                   :+:      :+:    :+:   */
+/*   register_datas.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 02:19:05 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/08/03 03:09:43 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/05 04:59:14 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	register_vertice(char *str, t_datas *datas)
 	tmp = ft_memalloc(sizeof(t_vertice));
 	if (!tmp)
 		return ;
-	tmp->w = 1.0;
-	if (sscanf(str, " %lf %lf %lf %lf", &tmp->x, &tmp->y, &tmp->z, &tmp->w)< 3)
+	if (sscanf(str, " %lf %lf %lf", &tmp->x, &tmp->y, &tmp->z) < 3)
 	{
 		free(tmp);
 		tmp = NULL;
@@ -34,35 +33,6 @@ void	register_vertice(char *str, t_datas *datas)
 	temp = datas->vertices;
 	tmp->next = temp;
 	datas->vertices = tmp;
-}
-
-void		register_texture(char *str, t_datas *datas)
-{
-	(void)str;
-	(void)datas;
-	// t_texture *tmp;
-	// t_texture *temp;
-
-	// if (str[0] != ' ')
-	// 	return;
-	// tmp = ft_memalloc(sizeof(t_texture));
-	// if (!tmp)
-	// 	return ;
-	// if (sscanf(str, " %lf %lf %lf", &tmp->u, &tmp->v, &tmp->w) == 0 || !is_valid_texture(tmp))
-	// {
-	// 	free(tmp);
-	// 	tmp = NULL;
-	// 	return ;
-	// }
-	// temp = datas->textures;
-	// tmp->next = temp;
-	// datas->textures = tmp;
-}
-
-void	register_normal(char *str, t_datas *datas)
-{
-	(void)str;
-	(void)datas;
 }
 
 void	add_face(t_datas *datas, t_face face)
