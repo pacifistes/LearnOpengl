@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 12:43:32 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/08/05 06:16:28 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/07 07:46:15 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	loop(t_opengl *opengl, t_mesh *mesh)
 	while (!glfwWindowShouldClose(opengl->window))
 	{
 		inputs(opengl);
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		update_render(opengl);
 		glUseProgram(opengl->shaders.shader);
@@ -62,7 +62,6 @@ int		main(int ac, char **args)
 	t_mesh	*mesh;
 
 	mesh = NULL;
-	// srand(time(NULL));
 	if (ac == 2)
 		mesh = load(args[1]);
 	else

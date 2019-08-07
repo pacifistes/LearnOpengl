@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/08/05 02:47:15 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/07 00:35:08 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			perspective(float matrice[16], float fov, float aspect);
 void			perspective2(float matrice[16], float fov, float aspect,
 float width, float height);
 void			rotate_with_axis(float matrice[16], float angle, t_vector axis);
-void	rotate_with_angle(float matrice[16], t_vector angles);
+void			rotate_with_angle(float matrice[16], t_vector angles);
 void			rotate_x(float matrice[16], float angle);
 void			rotate_y(float matrice[16], float angle);
 void			rotate_z(float matrice[16], float angle);

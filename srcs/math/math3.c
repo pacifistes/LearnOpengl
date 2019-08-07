@@ -6,12 +6,11 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 02:22:43 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/08/05 03:12:49 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/07 00:04:03 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
-
 
 void	rotate_x(float matrice[16], float angle)
 {
@@ -19,7 +18,7 @@ void	rotate_x(float matrice[16], float angle)
 	float sinus;
 
 	if (angle == 0.0f)
-		return;
+		return ;
 	angle *= DEG_TO_RAD;
 	cosinus = cos(angle);
 	sinus = sin(angle);
@@ -35,7 +34,7 @@ void	rotate_y(float matrice[16], float angle)
 	float sinus;
 
 	if (angle == 0.0f)
-		return;
+		return ;
 	angle *= DEG_TO_RAD;
 	cosinus = cos(angle);
 	sinus = sin(angle);
@@ -51,7 +50,7 @@ void	rotate_z(float matrice[16], float angle)
 	float sinus;
 
 	if (angle == 0.0f)
-		return;
+		return ;
 	angle *= DEG_TO_RAD;
 	cosinus = cos(angle);
 	sinus = sin(angle);
@@ -65,7 +64,7 @@ void	rotate_with_angle(float matrice[16], t_vector angles)
 {
 	t_vector s;
 	t_vector c;
-	
+
 	angles.x *= DEG_TO_RAD;
 	angles.y *= DEG_TO_RAD;
 	angles.z *= DEG_TO_RAD;

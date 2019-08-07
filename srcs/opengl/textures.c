@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/14 09:25:09 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/08/04 01:39:52 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/07 07:41:34 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ GLuint	load_texture(char *filename)
 	GL_BGR, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	free(image);
 	return (texture);
 }
 

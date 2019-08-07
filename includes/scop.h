@@ -6,7 +6,7 @@
 /*   By: bbrunell <bbrunell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 21:29:29 by bbrunell          #+#    #+#             */
-/*   Updated: 2019/08/05 01:00:52 by bbrunell         ###   ########.fr       */
+/*   Updated: 2019/08/07 00:35:20 by bbrunell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void			set_int(GLuint shader, char *str, GLint value);
 void			set_float(GLuint shader, char *str, GLfloat value);
 void			change_polygon_mode();
 void			inputs(t_opengl *opengl);
+int				key_up(GLFWwindow *window, int button, int button_index);
+int				key_down(GLFWwindow *window, int button);
 
 /*
 **	OTHER
