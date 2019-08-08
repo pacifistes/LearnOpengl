@@ -12,8 +12,10 @@ GLFWINCL = /Users/bbrunell/.brew/Cellar/glfw/3.3/include
 LIBFTINCL = libftprintf/printf/includes/
 
 SRCS = main.c \
-	loader/loader1.c \
-	loader/loader2.c \
+	loader/load.c \
+	loader/mesh.c \
+	loader/datas.c \
+	loader/registers.c \
 	opengl/window.c \
 	opengl/shaders.c \
 	opengl/keys.c \
